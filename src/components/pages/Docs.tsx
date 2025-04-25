@@ -1,5 +1,5 @@
 import "@/css/Docs.css"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { MenuSelected } from "@/App"
 import { PrimaryMenu } from "@/components/menus/PrimaryMenu"
 import { Copy, TabletDevice } from "@/components/icons/Icons"
@@ -7,11 +7,11 @@ import { SecondaryMenu } from "@/components/menus/SecondaryMenu"
 import { MarkdownViewer } from "@/components/MarkdowmViewer"
 
 export function Docs() {
+    const [selectedAccess, setSelectedAccess] = useState(0)
     const menuSelected = useContext(MenuSelected)
     if (!menuSelected) return null
-    const { selectedAccess } = menuSelected
-
-    console.log(selectedAccess)
+    setSelectedAccess(menuSelected.selectedAccess)
+    if(selectedAccess < 100) setSelectedAccess(100)
 
     return (
         <main className="docs-container">
