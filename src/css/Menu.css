@@ -1,0 +1,99 @@
+.primary-menu, .secondary-menu {  
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+    flex-direction: column;
+    overflow: hidden;
+    max-width: 270px;
+    min-width: 270px;
+    padding: 20px;
+    gap: 25px;
+
+    &::before {
+        position: absolute;
+        content: '';
+        bottom: -50px;
+        left: 20px;
+        width: 100%;
+        height: 200px;
+        z-index: 1;
+        transform: rotate(90deg);
+        background-image: url('/bg-dots.webp');
+        background-size: 1000px;
+    }
+    
+    .category-sec {
+        width: 100%;
+        display: grid;
+        gap: 10px;
+        
+        h3 {
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+            color: var(--fg-01);
+            gap: 10px;
+            position: relative;
+            background-color: var(--bg-02);
+            border: 1px solid var(--bg-04);
+            border-radius: 8px;
+            font-family: var(--font-01);
+            padding: 2px;
+
+            &::before, &::after {
+                position: absolute;
+                content: '';
+                width: 8px;
+                height: 8px;
+                background-color: var(--bg-04);
+                border-radius: 50%;
+            }
+            
+            &::before { top: 8px; right: 10px; }
+            &::after { top: 8px; right: 25px; }
+
+            svg {
+                width: 30px;
+                padding: 5px;
+                stroke-width: 2px;
+                background-color: var(--bg-01);
+                border: 1px solid var(--bg-03);
+                border-radius: 6px;
+            }
+        }
+
+        .article-sec {
+            display: grid;
+            position: relative;
+
+            a {
+                width: 100%;
+                padding: 7px 15px;
+                position: relative;
+                color: var(--fg-02);
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    top: 50%;
+                    transform: translateY(-50%);
+                    right: 0;
+                    width: 3px;
+                    height: 20px;
+                    border-radius: var(--rd-box);
+                }
+            }
+        }
+        
+        a.active { 
+            color: var(--fg-01);
+            &::before { background-color: var(--fg-01); }
+        }
+    }
+}
+
+@media screen and (max-width: 1420px) {
+    .secondary-menu {
+        display: none;
+    }
+}
