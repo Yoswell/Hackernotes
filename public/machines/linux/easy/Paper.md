@@ -86,18 +86,23 @@ http://chat.office.paper/register/8qozr226AhkCHZdyY
 ####
 Well, we discoved a subdomain: **chat.office.paper**. We must to incorporate this subdomain in the `/etc/hosts`. And aim against this subdomain. The sign up panel, ask for a username, email and password. We can try to register a new user.
 ####
-Well, **Rocket.chat** is very a web application very similar to Discord. Exist a only bot **recyclops**. If you start a new direct chat with this bot you can see that it function with commands. With command `help` a list the commands that we can use.
-####
 <div class="img">
-    <img src="/machines/public/paper/1.png" loading="lazy" decoding="aync" />
+    <img src="/machines/public/paper/1.png" loading="lazy" decoding="async" />
 </div>
 
+####
+Well, **Rocket.chat** is very a web application very similar to Discord. Exist a only bot **recyclops**. If you start a new direct chat with this bot you can see that it function with commands. With command `help` a list the commands that we can use.
 ####
 ####
 ####
 ## First explotation phase
 ### Rocket.chat:
 The most intersting command are: **list** and **file**, the first command seems be a `ls` command, and the second seems be a `cat` command. So we can asume that this web application present a posible [*Path Directory Traversal*]. If we pass to bot the next command: `list ../`, we achieve to see the directories and files of the **dwight** user. The `file` command don't allow us to read the user.txt flag and id_rsa, but in the home exist a diferrent directory: `hubot`.
+####
+<div class="img">
+    <img src="/machines/public/paper/2.png" loading="lazy" decoding="async" />
+</div>
+
 ####
 ```bash
 1. list ../

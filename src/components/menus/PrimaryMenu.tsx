@@ -18,7 +18,7 @@ export function PrimaryMenu() {
                 { title: "Hackthebox Bizness", d: "easy" },
                 { title: "Hackthebox Paper", d: "easy" },
                 { title: "Hackthebox Usage", d: "easy" },
-                { title: "Hackthebox Perfection", d: "easy" },
+                { title: "Hackthebox Writeup", d: "easy" },
                 { title: "Hackthebox Sau", d: "easy" },
             ]
         },

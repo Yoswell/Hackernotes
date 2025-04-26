@@ -101,7 +101,7 @@ In this case, sqlmap conveniently dumped the contents of the **user** table colu
 When we log in as **admin**, at the top there's a nav with a **settings** icon; clicking it takes us to a new subdomain: http://internal-administration.goodgames.htb/. If we add it to `/etc/hosts` and access it, it takes us to the following section:
 ####
 <div class="img">
-    <img src="/machines/public/goodgames/1.png" loading="lazy" decoding="aync" />
+    <img src="/machines/public/goodgames/1.png" loading="lazy" decoding="async" />
 </div>
 
 ####
@@ -110,21 +110,21 @@ It appears to be an administration dashboard; we don't know the credentials, but
 If we start browsing, we see nothing; there are sections and buttons without actions. But there is a section to configure the personal information of the **admin** user.
 ####
 <div class="img">
-    <img src="/machines/public/goodgames/2.png" loading="lazy" decoding="aync" />
+    <img src="/machines/public/goodgames/2.png" loading="lazy" decoding="async" />
 </div>
 
 ####
 This form is functional, so if we fill in the information, some section should update:
 ####
 <div class="img">
-    <img src="/machines/public/goodgames/3.png" loading="lazy" decoding="aync" />
+    <img src="/machines/public/goodgames/3.png" loading="lazy" decoding="async" />
 </div>
 
 ####
 If we see our input reflected in the form, it could be a clear indication that this section is vulnerable to SSTI [*Server Side Template Injection*], and since Python with **Flask** is running in the background, it could be vulnerable to **Jinja**, for example. Let's test by entering `{{7*7}}` in the `Full name` field.
 ####
 <div class="img">
-    <img src="/machines/public/goodgames/4.png" loading="lazy" decoding="aync" />
+    <img src="/machines/public/goodgames/4.png" loading="lazy" decoding="async" />
 </div>
 
 ####
