@@ -10,6 +10,29 @@
 80/tcp  open  http
 ```
 ####
+```perl
+22/tcp  open  ssh      OpenSSH 8.0 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 10:05:ea:50:56:a6:00:cb:1c:9c:93:df:5f:83:e0:64 (RSA)
+|   256 58:8c:82:1c:c6:63:2a:83:87:5c:2f:2b:4f:4d:c3:79 (ECDSA)
+|_  256 31:78:af:d1:3b:c4:2e:9d:60:4e:eb:5d:03:ec:a0:22 (ED25519)
+80/tcp  open  http     Apache httpd 2.4.37 ((centos) OpenSSL/1.1.1k mod_fcgid/2.3.9)
+|_http-server-header: Apache/2.4.37 (centos) OpenSSL/1.1.1k mod_fcgid/2.3.9
+|_http-title: chat.paper.htb
+443/tcp open  ssl/http Apache httpd 2.4.37 ((centos) OpenSSL/1.1.1k mod_fcgid/2.3.9)
+|_ssl-date: TLS randomness does not represent time
+|_http-title: HTTP Server Test Page powered by CentOS
+|_http-generator: HTML Tidy for HTML5 for Linux version 5.7.28
+| tls-alpn: 
+|_  http/1.1
+|_http-server-header: Apache/2.4.37 (centos) OpenSSL/1.1.1k mod_fcgid/2.3.9
+| ssl-cert: Subject: commonName=localhost.localdomain/organizationName=Unspecified/countryName=US
+| Subject Alternative Name: DNS:localhost.localdomain
+| Not valid before: 2021-07-03T08:52:34
+|_Not valid after:  2022-07-08T10:32:34
+Service detection performed. Please report any incorrect results at https://nmap.org/submit
+```
+####
 ####
 ####
 ## Services running on the target machine
@@ -127,7 +150,10 @@ sqlmap -r req -p email --level 3 --batch --columns -T admin_users --dump
 ### Upload file:
 At the moment to enter into the website after cracking some passwords, we see a dashboard with information on installed dependencies, so we must search for possible exploits. There is a section to assign an avatar image to the **admin** user, so this could represent a possible AFU [*Arbitrary File Upload*]. 
 ####
-The dependency that comes closest to this is: [*Encode/larabel admin 1.8.18*]. Here there a good exploit that help us to exploit this vulnerability: [AFU-CVE-2023-24249](https://flyd.uk/post/cve-2023-24249)
+The dependency that comes closest to this is: [*Encode/larabel admin 1.8.18*]. Here there a good exploit that help us to exploit this vulnerability: 
+####
+- Exploit:
+    - [Arbitrary-File-Upload-CVE-2023-24249](https://flyd.uk/post/cve-2023-24249)
 ####
 We generate an image with its corresponding headers and insert some PHP code to obtain a **cmd** into this file, so form that if we change the file extention to **php**, we will are able to execute commands in the target machine doing use the **cmd** parameter into the url. Something similar to this: http://127.0.0.1/images/malicius.jpg.php?cmd=whoami.
 ####

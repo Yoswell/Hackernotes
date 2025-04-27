@@ -9,7 +9,7 @@
 22/tcp open  ssh
 80/tcp open  http
 ```
-#### Nmap version:
+####
 ```perl
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 9.2p1 Debian 2+deb12u1 (protocol 2.0)

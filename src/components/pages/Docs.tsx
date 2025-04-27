@@ -32,6 +32,7 @@ export function Docs() {
                     { selectedAccess === 102 && <MarkdownViewer filePath="/machines/linux/easy/Paper.md" /> }
                     { selectedAccess === 103 && <MarkdownViewer filePath="/machines/linux/easy/Usage.md" /> }
                     { selectedAccess === 104 && <MarkdownViewer filePath="/machines/linux/easy/Writeup.md" /> }
+                    { selectedAccess === 105 && <MarkdownViewer filePath="/machines/linux/easy/Precious.md" /> }
                     { selectedAccess === 300 && <MarkdownViewer filePath="/errors/Ker_ClockSkew.md" /> }
                 </section>
             </div>

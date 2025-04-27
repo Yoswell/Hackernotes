@@ -71,6 +71,7 @@
                 padding: 7px 15px;
                 position: relative;
                 color: var(--fg-02);
+                text-decoration: none;
 
                 &::before {
                     position: absolute;

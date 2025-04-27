@@ -229,9 +229,67 @@ em { color: var(--red-hack-1); }
     a {
         white-space: nowrap;
         text-decoration: none;
-        font-weight: 700;
-        color: var(--fg-01);
-        border-bottom: 1px solid var(--fg-url);
+        color: var(--blue-01);
+        font-weight: 600;
+    }
+}
+
+.tag {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    padding: 8px;
+    gap: 4px;
+    border-radius: var(--rd-box);
+    border: 1px solid var(--bg-04);
+
+    &::before {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 200px;
+        z-index: 0;
+        background-image: url('/Squares.svg');
+        background-size: 150px;
+        mask-image: linear-gradient(To bottom, var(--bg-01), transparent);
+    }
+
+    &::after {
+        position: absolute;
+        content: '';
+        top: -50px;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        filter: blur(60px);
+        z-index: 0;
+        opacity: 0.3;
+        background-color: var(--red-hack-1);
+    }
+
+    span {
+        display: grid;
+        place-content: center;
+        text-align: center;
+        padding: 0 15px;
+        height: 30px;
+        color: var(--fg-02);
+        white-space: nowrap;
+        background-color: var(--bg-02);
+        border: 1px solid var(--bg-04);
+        border-radius: 6px;
+        display: block;
+        font-size: 12px;
+        -webkit-text-stroke-color: var(--bg-01);
+        -webkit-text-stroke-width: 0.2px;
+        font-family: var(--font-01);
+        z-index: 1;
     }
 }
 
@@ -256,8 +314,6 @@ ol {
 /*=== Lists ===*/
 ul {
     display: grid;
-    gap: 5px;
-    position: relative;
     padding-left: 20px;
     list-style: disc;
     color: var(--fg-01);
@@ -268,7 +324,14 @@ ul {
         font-weight: 800;
     }
 
-    li { font-size: 14px; line-height: 1.4; }
+    li { 
+        font-size: 14px;
+        &:first-child {
+            font-size: 15px;
+            color: var(--fg-01);
+            font-weight: 700;
+        }
+    }
 }
 
 /*=== Prose ===*/
@@ -387,6 +450,10 @@ ul {
         .function_ { color: #c53b53; font-weight: 600; }
         .hljs-comment { color: #24252a; }
         .hljs-built_in { color: #6b529c; font-weight: 600; }
+
+        .hljs-string { color: #50556a !important; }
+        .hljs-comment { color: #24252a !important; }
+        .hljs-number { color: #35353d !important; }
     }
 }
 
