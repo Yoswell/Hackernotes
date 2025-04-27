@@ -286,8 +286,6 @@ em { color: var(--red-hack-1); }
         border-radius: 6px;
         display: block;
         font-size: 12px;
-        -webkit-text-stroke-color: var(--bg-01);
-        -webkit-text-stroke-width: 0.2px;
         font-family: var(--font-01);
         z-index: 1;
     }
@@ -389,6 +387,7 @@ ul {
         z-index: 1;
         filter: contrast(1.02);
         border: 1px solid var(--bg-04);
+        transition: 10ms;
     }
 }
 
@@ -441,19 +440,15 @@ ul {
             color: var(--fg-03) !important;
         }
 
-        .hljs-keyword { color: #9ab0f7; }
-        .hljs-name { color: #bb9af7; }
-        .hljs-string { color: #c0caf5; }
-        .hljs-number { color: #c53b53; }
-        .hljs-attr { color: #737aa2; }
-        .hljs-variable { color: #c0caf5; }
-        .function_ { color: #c53b53; font-weight: 600; }
-        .hljs-comment { color: #24252a; }
-        .hljs-built_in { color: #6b529c; font-weight: 600; }
-
-        .hljs-string { color: #50556a !important; }
-        .hljs-comment { color: #24252a !important; }
-        .hljs-number { color: #35353d !important; }
+        .hljs-keyword { color: #7a7d8f; }
+        .hljs-name { color: #6a6d80; }
+        .hljs-string { color: #8a8d9f; }
+        .hljs-number { color: #5a5d70; }
+        .hljs-attr { color: #5d5f6b; }
+        .hljs-variable { color: #7a7d90; }
+        .function_ { color: #6a6e80; font-weight: 600; }
+        .hljs-comment { color: #aaaaaa; }
+        .hljs-built_in { color: #8a8e9f; font-weight: 600; }
     }
 }
 
