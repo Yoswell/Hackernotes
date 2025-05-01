@@ -38,6 +38,7 @@ function App() {
                     ))}</>
                 ))}
             </Routes>
+            <span className='scan-animate'></span>
         </BrowserRouter>
         </MenuItemSelected>
     )

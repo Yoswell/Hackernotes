@@ -100,8 +100,6 @@ body {
     max-width: 1420px;
     height: 100vh;
     margin: 0 auto;
-    background-image: url('/Points.svg');
-    background-size: 80px;
 }
 
 .draw-line {
@@ -110,11 +108,7 @@ body {
     background-image: url('/Lines.svg');
     background-size: 60px;
     z-index: 10;
-
-    &:nth-child(1) { outline: 1px solid var(--bg-03); }
-    &:nth-child(3) { outline: 1px solid var(--bg-02); }
-    &:nth-child(5) { outline: 1px solid var(--bg-02); }
-    &:nth-child(7) { outline: 1px solid var(--bg-03); }
+    outline: 1px solid var(--bg-04);
 }
 
 .scan-animate {

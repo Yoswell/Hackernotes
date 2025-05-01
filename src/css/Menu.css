@@ -6,8 +6,10 @@
     overflow: hidden;
     max-width: 270px;
     min-width: 270px;
-    padding: 20px;
+    padding: 10px;
     gap: 25px;
+    background-image: url('/Points.svg');
+    background-size: 80px;
 
     &::before {
         position: absolute;
@@ -36,7 +38,7 @@
             position: relative;
             background-color: var(--bg-02);
             border: 1px solid var(--bg-04);
-            border-radius: 8px;
+            border-radius: 6px;
             font-family: var(--font-01);
             padding: 2px;
 
@@ -84,24 +86,11 @@
                     left: 10px;
                     transform: translateY(-50%);
                     width: 2px;
-                    height: 20px;
+                    height: 25px;
                     border-radius: var(--rd-box);
+                    background-color: var(--bg-04);
                 }
             }
-
-            a.easy::before { background-color: #99ba75; }
-            a.medium::before { background-color: #c6a174; }
-        }
-
-        .article-tags a {
-            padding: 5px 25px;
-
-            &::before { background-color: var(--purple-hack-1); }
-        }
-        
-        a.active { 
-            color: var(--fg-01);
-            &::before { background-color: var(--fg-01); }
         }
     }
 }

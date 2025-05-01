@@ -36,7 +36,7 @@ header {
             flex-wrap: nowrap;
             border: 1px solid var(--bg-04);
             background-color: var(--bg-02);
-            border-radius: 8px;
+            border-radius: 6px;
             padding: 0 10px;
             height: inherit;
             
@@ -82,7 +82,7 @@ header {
     .cont-links {
         width: 100%;
         min-width: 270px;
-        padding: 0 20px;
+        padding: 0 10px;
         display: flex;
         align-items: center;
         height: 35px;
@@ -98,7 +98,7 @@ header {
             font-weight: 700;
             color: var(--fg-01);
             font-size: 14px;
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid var(--bg-04);
         }
     }
