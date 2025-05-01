@@ -1,22 +1,45 @@
 import '@/css/App.css'
-import { Docs } from '@/components/pages/Docs'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Nav } from '@/components/menus/Nav'
-import { createContext, useState } from 'react'
+import { Docs, DocsContent } from '@/components/pages/Docs'
+import { MarkdownViewer } from '@/components/MarkdowmViewer'
+import { menuItems } from '@/components/constants/Machines'
+import { createContext, useEffect, useState } from 'react'
 
-export const MenuSelected = createContext<{ 
-    selectedAccess: number; 
-    setSelectedAccess: React.Dispatch<React.SetStateAction<number>>; 
-} | null>(null)
+export const MenuItemSelected = createContext<{ item: string; setSelectedItem: React.Dispatch<React.SetStateAction<string>> }>({
+    item: '',
+    setSelectedItem: () => {}
+})
 
 function App() {
-    const [selectedAccess, setSelectedAccess] = useState(0)
+    const [item, setSelectedItem] = useState("")
+
+    useEffect(() => {
+        setSelectedItem("GoodGames")
+    }, [])
 
     return (
-        <MenuSelected.Provider value={{ selectedAccess, setSelectedAccess }}>
+        <MenuItemSelected value={{item, setSelectedItem}}>              
+        <BrowserRouter>
             <Nav />
-            <Docs />
-            <span className='scan-animate'></span>
-        </MenuSelected.Provider>
+            <Routes>
+                <Route path='/' element={<Docs />} />
+                {menuItems.map((item) => (
+                    <>{item.items.map((item_sm, index) => (
+                        <Route 
+                            key={index}
+                            path={`/machines/${item_sm.name}`} 
+                            element={
+                                <DocsContent>
+                                    <MarkdownViewer filePath={`/machines/${item_sm.name}.md`} key={index} />
+                                </DocsContent>
+                            }>
+                        </Route>
+                    ))}</>
+                ))}
+            </Routes>
+        </BrowserRouter>
+        </MenuItemSelected>
     )
 }
 

@@ -1,8 +1,27 @@
 import { Cube, World } from "@/components/icons/Icons"
+import { menuItems } from "../constants/Machines"
+import { MenuItemSelected } from "@/App"
+import { useContext } from "react"
 
 export function SecondaryMenu() {
+    const { item } = useContext(MenuItemSelected)
+
     return (
         <aside className="secondary-menu">
+            <div className="category-sec">
+                <h3><World />Topics</h3>
+                <article className="article-sec article-tags">
+                    {menuItems.map((a) => (
+                        <>{a.items.map((item_sm) => (
+                            <>{item_sm.tags.map((item_mm, index) => {
+                                {if(item_sm.name === item) {
+                                    return <a className="tag" key={index}>{item_mm}</a>
+                                }}
+                            })}</>
+                        ))}</>
+                    ))}
+                </article>
+            </div>
             <div className="category-sec">
                 <h3><World />Social media</h3>
                 <article className="article-sec">

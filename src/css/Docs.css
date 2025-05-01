@@ -18,7 +18,7 @@ h2::before { background-color: var(--purple-hack-1); }
 h3::before { background-color: var(--orange-01); }
 em { color: var(--red-hack-1); }
 
-.primary-menu h3 svg, .secondary-menu h3 svg { color: var(--purple-hack-1); }
+.primary-menu h3 svg, .secondary-menu h3 svg { color: var(--fg-01); }
 
 .fluid-container {
     display: flex;
@@ -31,26 +31,6 @@ em { color: var(--red-hack-1); }
     margin: 10px;
     border-radius: var(--rd-box);
     border: 1px solid var(--bg-03);
-
-    /*=== Blur top content ===*/
-    &::before, &::after {
-        position: absolute;
-        content: '';
-        width: 450px;
-        height: 450px;
-    }
-
-    &::before {
-        top: -300px;
-        left: -200px;
-        border-radius: 30% 70% 18% 82% / 30% 35% 65% 70%;
-    }
-
-    &::after {
-        top: -200px;
-        right: -300px;
-        border-radius: 54% 46% 18% 82% / 78% 35% 65% 22%;
-    }
 
     /*=== Top bar hide menu and copy ===*/
     .row {
@@ -160,135 +140,7 @@ em { color: var(--red-hack-1); }
 /*=== Titles ===*/
 .main-container {
     width: 100%;
-    padding-top: 40px;
-
-    h1, h2, h3, h4, h5, h6 {
-        position: relative;
-        
-        &::before {
-            position: absolute;
-            content: '';
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 70%;
-            border-radius: var(--rd-box);
-        }
-    }
-
-    h1 {
-        width: 100%;
-        text-align: center;
-        line-height: 1.4;
-        color: var(--fg-01); 
-        font-weight: 500;
-        font-size: clamp(25px, 5vw, 40px);
-        font-family: var(--font-01);
-    }
-
-    h2 { 
-        font-weight: 600;
-        color: var(--fg-01); 
-        font-size: 23px;
-        padding-left: 15px;
-    }
-
-    h3 { 
-        font-size: 18px;
-        font-weight: 400;
-        color: var(--fg-01); 
-        margin-bottom: 10px;
-        font-family: var(--font-01);
-        padding-left: 15px;
-    }
-
-    h4 { height: 20px; }
-
-    h5 { 
-        margin: 0 auto;
-        font-weight: 500;
-        padding: 3px 15px;
-        border-radius: 20px;
-        backdrop-filter: blur(2px);
-        font-family: var(--font-01);
-        border: 1px solid var(--bg-04);
-        background: linear-gradient(40deg, #6b529c63, var(--bg-01), #9c526766);
-        color: var(--fg-01); 
-        margin-bottom: 15px;
-    }
-
-    h6 { 
-        font-weight: 700;
-        color: var(--fg-01); 
-        font-size: 17px;
-        padding-bottom: 10px;
-    }
-    
-    /*=== Links ===*/
-    a {
-        white-space: nowrap;
-        text-decoration: none;
-        color: var(--blue-01);
-        font-weight: 600;
-    }
-}
-
-.tag {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: flex-end;
-    position: relative;
-    overflow: hidden;
-    padding: 8px;
-    gap: 4px;
-    border-radius: var(--rd-box);
-    border: 1px solid var(--bg-04);
-
-    &::before {
-        position: absolute;
-        content: '';
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 200px;
-        z-index: 0;
-        background-image: url('/Squares.svg');
-        background-size: 150px;
-        mask-image: linear-gradient(To bottom, var(--bg-01), transparent);
-    }
-
-    &::after {
-        position: absolute;
-        content: '';
-        top: -50px;
-        right: 0;
-        width: 100px;
-        height: 100px;
-        filter: blur(60px);
-        z-index: 0;
-        opacity: 0.3;
-        background-color: var(--red-hack-1);
-    }
-
-    span {
-        display: grid;
-        place-content: center;
-        text-align: center;
-        padding: 0 15px;
-        height: 30px;
-        color: var(--fg-02);
-        white-space: nowrap;
-        background-color: var(--bg-02);
-        border: 1px solid var(--bg-04);
-        border-radius: 6px;
-        display: block;
-        font-size: 12px;
-        font-family: var(--font-01);
-        z-index: 1;
-    }
+    padding-top: 40px;  
 }
 
 /*=== Number Lists ===*/
@@ -338,6 +190,78 @@ ul {
     align-items: flex-start;
     flex-direction: column;
     width: 100%;
+
+    h1, h2, h3, h4, h5, h6 {
+        position: relative;
+        
+        &::before {
+            position: absolute;
+            content: '';
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 70%;
+            border-radius: var(--rd-box);
+        }
+    }
+
+    h1 {
+        width: 100%;
+        text-align: center;
+        line-height: 1.4;
+        color: var(--fg-01); 
+        font-weight: 500;
+        font-size: clamp(25px, 5vw, 40px);
+        font-family: var(--font-01);
+        z-index: 1;
+    }
+
+    h2 { 
+        font-weight: 600;
+        color: var(--fg-01); 
+        font-size: 23px;
+        padding-left: 15px;
+    }
+
+    h3 { 
+        font-size: 18px;
+        font-weight: 400;
+        color: var(--fg-01); 
+        margin-bottom: 10px;
+        font-family: var(--font-01);
+        padding-left: 15px;
+    }
+
+    h4 { height: 20px; }
+
+    h5 { 
+        margin: 0 auto;
+        font-weight: 500;
+        padding: 3px 15px;
+        border-radius: 20px;
+        backdrop-filter: blur(2px);
+        font-family: var(--font-01);
+        border: 1px solid var(--bg-04);
+        background: linear-gradient(40deg, #6b529c63, var(--bg-01), #9c526766);
+        color: var(--fg-01); 
+        margin-bottom: 15px;
+    }
+
+    h6 { 
+        font-weight: 700;
+        color: var(--fg-01); 
+        font-size: 17px;
+        padding-bottom: 10px;
+    }
+    
+    /*=== Links ===*/
+    a {
+        white-space: nowrap;
+        text-decoration: none;
+        color: var(--blue-01);
+        font-weight: 600;
+    }
 }
 
 /*=== images ===*/
@@ -385,7 +309,7 @@ ul {
         max-width: 100%;
         border-radius: 8px;
         z-index: 1;
-        filter: contrast(1.02);
+        filter: contrast(1.03);
         border: 1px solid var(--bg-04);
         transition: 10ms;
     }
@@ -536,14 +460,14 @@ p, li, span {
 }
 
 .tip {
-    background-color: var(--green-03);
-    border: 1px solid var(--green-02);
+    background-color: var(--purple-03);
+    border: 1px solid var(--purple-02);
 
     &::before { background-image: url('/Tip.svg'); }
 
     p { 
-        color: var(--green-01);
-        code { border: 1px solid var(--green-02); }
+        color: var(--purple-01);
+        code { border: 1px solid var(--purple-02); }
     }
 }
 

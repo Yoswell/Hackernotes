@@ -3,24 +3,6 @@
 ####
 ####
 ####
-## Concepts viewed so far
-### Tags:
-<div class="tag">
-    <span>#http</span>
-    <span>#caido</span>
-    <span>#pdf</span>
-    <span>#pdfkit v8.7.2</span>
-    <span>#command injection</span>
-    <span>#ruby</span>
-    <span>#python</span>
-    <span>#revshell</span>
-    <span>#tcpdump</span>
-    <span>#wget</span>
-</div>
-
-####
-####
-####
 ## Open ports in the target machine
 ### Nmap:
 ```ruby

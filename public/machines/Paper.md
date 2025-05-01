@@ -38,7 +38,7 @@ The enumerate process report us on unique directory: `/manual`, perfom a deep ex
 ####
 ####
 ####
-### Apache
+### Apache:
 How the web application no posses a visual version of the *CMS* or service that is running, we can try to enumerate the version of the service or CMS that is running using tools like: [*whatweb*, *wapallyzer*, *curl*]. Whatweb is our best option, because allow us to enumerate the version of the service or CMS that is running. At the moment to execute this command we can achieve the next information:
 ####
 ```rust

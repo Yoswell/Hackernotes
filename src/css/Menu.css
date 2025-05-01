@@ -68,22 +68,35 @@
 
             a {
                 width: 100%;
-                padding: 7px 15px;
+                padding: 7px 25px;
                 position: relative;
                 color: var(--fg-02);
                 text-decoration: none;
+                white-space: nowrap;
+                max-width: 100%;
+                text-overflow: ellipsis;
+                overflow: hidden;
 
                 &::before {
                     position: absolute;
                     content: '';
                     top: 50%;
+                    left: 10px;
                     transform: translateY(-50%);
-                    right: 0;
-                    width: 3px;
+                    width: 2px;
                     height: 20px;
                     border-radius: var(--rd-box);
                 }
             }
+
+            a.easy::before { background-color: #99ba75; }
+            a.medium::before { background-color: #c6a174; }
+        }
+
+        .article-tags a {
+            padding: 5px 25px;
+
+            &::before { background-color: var(--purple-hack-1); }
         }
         
         a.active { 
