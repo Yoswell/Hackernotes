@@ -97,6 +97,23 @@ export const menuItems = [
                     "Tcpdump",
                     "Wget"
                 ]
+            },
+            { 
+                name: "SteamCloud",
+                difficulty: "easy",
+                tags: [
+                    "HTTP",
+                    "HTTPS",
+                    "Etcd",
+                    "Kubernetes",
+                    "Kubectl",
+                    "Kubeletctl",
+                    "Nginx 1.14.2",
+                    "Mount",
+                    "Docker",
+                    "YAML",
+                    "Wfuzz"
+                ]
             }
         ]
     },

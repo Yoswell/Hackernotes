@@ -17,7 +17,7 @@
 ### HTTPS:
 The machine redirects to the *HTTPS* service, but the web page is blank, with no login or registration sections, so we will perform enumeration to find more things. Although the service has a self-signed certificate, enumeration tools like **gobuster** do not allow enumeration without specific parameters.
 ####
-```js
+```ruby
 gobuster dir -u 'https://bizness.htb/' -w /usr/share/wordlists/dictionary/web-content/directory-list-lowercase-2.3-medium.txt -t 150 -b 404,302 -k
 ```
 ####
@@ -42,9 +42,7 @@ At first, we see an error message because it is a root directory, which itself d
 000000077:   200        140 L    496 W      9308  Ch    "main"
 ```
 ####
-For the first two, we cannot see their contents because we do not have permissions, so we are left with the other two. If we go to `/login`, in the footer we see a version: [*Apache Ofbiz 18.12*], so if we look for exploits or vulnerabilities related to this version, we will find some:
-####
-[Exploit-RCE](https://github.com/jakabakos/Apache-OFBiz-Authentication-Bypass)
+For the first two, we cannot see their contents because we do not have permissions, so we are left with the other two. If we go to `/login`, in the footer we see a version: [*Apache Ofbiz 18.12*], so if we look for exploits or vulnerabilities related to this version, we will find some: [OFBiz-Authentication-Bypass-RCE](https://github.com/jakabakos/Apache-OFBiz-Authentication-Bypass)
 ####
 The exploit is executed as follows:
 ####

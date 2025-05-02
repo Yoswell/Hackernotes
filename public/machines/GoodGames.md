@@ -25,7 +25,7 @@ wfuzz -c -u 'http://goodgames.htb/FUZZ' -w /usr/share/wordlists/dictionary/web-c
 | -u | Specifies the URL of the site to enumerate |
 | -w | Specifies the path to the wordlist to use |
 | -t | Specifies the number of parallel tasks to launch |
-| -hw | (*Hide Word*) Hides results with a specific word count |
+| --hw | (*Hide Word*) Hides results with a specific word count |
 ####
 The gobuster report us the nex information:
 ####

@@ -45,6 +45,14 @@ Inside, it's a blog without interesting routes, so we continue with other method
 wfuzz -c --hc 404 -u 'http://usage.htb' -H 'Host: FUZZ.usage.htb' -w /usr/share/wordlists/dictionary/dns/subdomains-top1million-110000.txt -t 200
 ```
 ####
+| Wfuzz Param | Description |
+| ----- | ----- |
+| -c | Colors the displayed results |
+| -u | Specifie the URL of the site to enumerate |
+| -w | Specifie the path to the wordlist to use |
+| -t | Specifie the number of parallel tasks to launch |
+| -H | Specifie the subdomain enumeration |
+####
 This leads us to a different authentication panel. Since we lack credentials, we can't do much. The first panel returns an error message when credentials are invalid, suggesting a database is running behind it. It is not vulnerable, but it has a *reset password* feature. We intercept that request and capture the `token` and `cookie`.
 ####
 <div class="warning">

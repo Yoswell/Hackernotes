@@ -32,7 +32,8 @@ The enumarate proccess report us many incorrect information, information that po
 | -u | Especify the url to enumerate |
 | -w | Especify the dicctionary to use |
 | -t | Especify how much tasks must used |
-| -hh | [*Hide Character*] Hide results that have a specifique lenght characters |
+| --hc | [*Hide Code*] Hide results that have a specifique status code |
+| --hh | [*Hide Character*] Hide results that have a specifique lenght characters |
 ####
 The enumerate process report us on unique directory: `/manual`, perfom a deep explorin into this directory, see the information in the browser and making more enumeration scan aginst this directory we can't achieve see something intersting.
 ####
