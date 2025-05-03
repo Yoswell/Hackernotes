@@ -5,6 +5,14 @@
 ####
 ## Open ports in the target machine
 ### Nmap:
+After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
+####
+<div class="info">
+
+> Reconnaissance or footprinting is the most critical phase of a pentest, and **Nmap** is the essential tool for it. Nmap automate the reconigtion avoiding that you depend of supositions or blind attacks.
+</div>
+
+####
 ```perl
 22/tcp    open  ssh
 2379/tcp  open  etcd-client
@@ -15,8 +23,7 @@
 10256/tcp open  unknown
 ```
 ####
-### Extract port:
-To extract port we will do the next:
+How are many ports, is a little tedious insert one to one port in a new line to make a new scan to discover the services, so I use this approach to make easier the work:
 ####
 ```ruby
 echo '
@@ -41,7 +48,8 @@ echo '
 | s/ | Especify the start of the sustitution |
 | /g | Especify the end of the sustitution |
 ####
-### Nmap version:
+Result of nmap scan:
+####
 ```perl
 PORT      STATE SERVICE          VERSION
 22/tcp    open  ssh              OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)

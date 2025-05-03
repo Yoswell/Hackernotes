@@ -5,10 +5,20 @@
 ####
 ## Open ports in the target machine
 ### Nmap:
+After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
+####
+<div class="info">
+
+> Reconnaissance or footprinting is the most critical phase of a pentest, and **Nmap** is the essential tool for it. Nmap automate the reconigtion avoiding that you depend of supositions or blind attacks.
+</div>
+
+####
 ```ruby
 22/tcp open  ssh
 80/tcp open  http
 ```
+####
+Result of the nmap scan:
 ####
 ```ruby
 PORT   STATE SERVICE VERSION

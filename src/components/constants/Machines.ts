@@ -147,5 +147,23 @@ export const menuItems = [
                 ]
             }
         ]
+    },
+    {
+        category: "Common Errors",
+        items: [
+            { 
+                name: "Kerberos Clock Skew Too Great",
+                difficulty: "",
+                tags: [
+                    "Ntpdate",
+                    "Faketime",
+                    "Kerberos",
+                    "KRB5CCNAME",
+                    "Bash",
+                    "TGT",
+                    "Impacket Suite",
+                ] 
+            }
+        ]
     }
 ]

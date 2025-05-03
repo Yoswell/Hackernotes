@@ -28,7 +28,8 @@ export function PrimaryMenu() {
                                     ${item.difficulty === "medium" && "medium"}
                                     ${item.difficulty === "hard" && "hard"}
                                 `}>
-                                Hackthebox {item.name}
+                                {category.category != "Common Errors" && "Hackthebox "}
+                                {item.name}
                             </Link>
                         ))}
                     </article>
