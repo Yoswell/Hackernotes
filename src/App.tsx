@@ -5,6 +5,7 @@ import { Docs, DocsContent } from '@/components/pages/Docs'
 import { MarkdownViewer } from '@/components/MarkdowmViewer'
 import { menuItems } from '@/components/constants/Machines'
 import { createContext, useEffect, useState } from 'react'
+import { SearchMachine } from './components/SearchMachine'
 
 export const MenuItemSelected = createContext<{ item: string; setSelectedItem: React.Dispatch<React.SetStateAction<string>> }>({
     item: '',
@@ -38,6 +39,7 @@ function App() {
                     ))}</>
                 ))}
             </Routes>
+            <SearchMachine />
             <span className='scan-animate'></span>
         </BrowserRouter>
         </MenuItemSelected>

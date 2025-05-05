@@ -25,7 +25,7 @@
 
     --blue-01: #8cccec;
     --blue-02: #072f40;
-    --blue-03: #050e13;
+    --blue-03: #040c10;
 
     --red-01: #ec8c8c;
     --red-02: #381a1a;
@@ -106,9 +106,9 @@ body {
     width: 10px;
     height: 100%;
     background-image: url('/Lines.svg');
-    background-size: 60px;
+    background-size: 80px;
+    outline: 1px solid var(--bg-03);
     z-index: 10;
-    outline: 1px solid var(--bg-04);
 }
 
 .scan-animate {

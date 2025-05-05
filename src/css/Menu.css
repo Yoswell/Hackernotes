@@ -30,37 +30,24 @@
         gap: 10px;
         
         h3 {
+            height: 35px;
             display: flex;
             align-items: center;
-            font-weight: 400;
             color: var(--fg-01);
             gap: 10px;
             position: relative;
             background-color: var(--bg-02);
             border: 1px solid var(--bg-04);
             border-radius: 6px;
-            font-family: var(--font-01);
-            padding: 2px;
-
-            &::before, &::after {
-                position: absolute;
-                content: '';
-                width: 8px;
-                height: 8px;
-                background-color: var(--bg-04);
-                border-radius: 50%;
-            }
-            
-            &::before { top: 8px; right: 10px; }
-            &::after { top: 8px; right: 25px; }
+            padding: 3px;
 
             svg {
-                width: 30px;
+                width: 26px;
                 padding: 5px;
                 stroke-width: 2px;
-                background-color: var(--bg-01);
-                border: 1px solid var(--bg-03);
-                border-radius: 6px;
+                background-color: var(--bg-03);
+                border: 1px solid var(--bg-04);
+                border-radius: 4px;
             }
         }
 

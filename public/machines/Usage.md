@@ -7,20 +7,20 @@
 ### Nmap:
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
-<div class="info">
+<div class="tip">
 
-> Reconnaissance or footprinting is the most critical phase of a pentest, and **Nmap** is the essential tool for it. Nmap automate the reconigtion avoiding that you depend of supositions or blind attacks.
+> Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
 ####
-```perl
-22/tcp  open  ssh
-80/tcp  open  http
+```ruby
+22/tcp open  ssh
+80/tcp open  http
 ```
 ####
 Result of nmap scan:
 ####
-```perl
+```ruby
 22/tcp  open  ssh      OpenSSH 8.0 (protocol 2.0)
 | ssh-hostkey: 
 |   2048 10:05:ea:50:56:a6:00:cb:1c:9c:93:df:5f:83:e0:64 (RSA)
@@ -45,7 +45,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 ####
 ####
 ####
-## Services running on the target machine
+## Services that are running in the target machine
 ### HTTP:
 When opening the website *http://usage.htb*, we see three main routes: `login`, `register`, and `admin`. The most interesting is **admin**, but we don't have access to it. Since there is an admin panel, the first thing that comes to mind is to try an SQLi [*SQL Injection*], but it appears this admin panel is not vulnerable, so we proceed to register. 
 ####

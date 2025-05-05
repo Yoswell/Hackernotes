@@ -7,20 +7,20 @@
 ### Nmap:
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
-<div class="info">
+<div class="tip">
 
-> Reconnaissance or footprinting is the most critical phase of a pentest, and **Nmap** is the essential tool for it. Nmap automate the reconigtion avoiding that you depend of supositions or blind attacks.
+> Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
 ####
-```perl
+```ruby
 22/tcp open  ssh
 80/tcp open  http
 ```
 ####
 Result of nmap scan:
 ####
-```perl
+```ruby
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 9.2p1 Debian 2+deb12u1 (protocol 2.0)
 | ssh-hostkey: 

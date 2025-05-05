@@ -112,9 +112,9 @@ em { color: var(--red-hack-1); }
             align-items: center;
             gap: 8px;
             height: 30px;
-            font-size: 11px;
+            font-size: 12px;
             padding: 0 10px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--fg-01);
         }
     }

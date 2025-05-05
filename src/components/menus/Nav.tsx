@@ -7,14 +7,15 @@ export function Nav() {
             <div className="draw-line"></div>
             <h1>Hackernotes</h1>
             <div className="draw-line"></div>
-            <div className="row">
-                <div className="search-cont">
+            <article className="search-cont">
+                <div className="search">
                     <Search />
                     <input type="text" placeholder="Search specific and precise tags... " />
-                    <span className="float float-01">Ctrl</span>
-                    <span className="float float-02">K</span>
+                    <div className="cont-commands">
+                        <span>(Ctrl K) to open</span>
+                    </div>
                 </div>
-            </div>
+            </article>
             <div className="draw-line"></div>
             <div className="cont-links">
                  <a>Log In</a>

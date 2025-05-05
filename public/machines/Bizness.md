@@ -7,13 +7,13 @@
 ### Nmap:
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
-<div class="info">
+<div class="tip">
 
-> Reconnaissance or footprinting is the most critical phase of a pentest, and **Nmap** is the essential tool for it. Nmap automate the reconigtion avoiding that you depend of supositions or blind attacks.
+> Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
 ####
-```perl
+```ruby
 22/tcp  open  ssh
 80/tcp  open  http
 443/tcp open  https
@@ -21,7 +21,7 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 ####
 ####
 ####
-## Services running on the target machine
+## Services that are running in the target machine
 ### HTTPS:
 The machine redirects to the *HTTPS* service, but the web page is blank, with no login or registration sections, so we will perform enumeration to find more things. Although the service has a self-signed certificate, enumeration tools like **gobuster** do not allow enumeration without specific parameters.
 ####

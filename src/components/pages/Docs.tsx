@@ -1,7 +1,7 @@
 import "@/css/Docs.css"
 import { FC, ReactNode } from "react"
 import { PrimaryMenu } from "@/components/menus/PrimaryMenu"
-import { Copy, TabletDevice } from "@/components/icons/Icons"
+import { TabletDevice } from "@/components/icons/Icons"
 import { SecondaryMenu } from "@/components/menus/SecondaryMenu"
 import { MarkdownViewer } from "@/components/MarkdowmViewer"
 
@@ -27,7 +27,7 @@ export const DocsContent : FC<{children: ReactNode}> = ({children}) => {
                     <div className="avatar">
                         <img src="/Avatar.png" decoding="async" loading="lazy" />
                     </div>
-                    <button className="btn btn-copy"><Copy />Copy markdowm</button>
+                    <button className="btn btn-copy"><TabletDevice />Hide right menu</button>
                 </div>
                 {children}
             </div>

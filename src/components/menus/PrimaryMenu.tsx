@@ -16,7 +16,7 @@ export function PrimaryMenu() {
         <aside className="primary-menu">
             {menuItems.map((category, index) => (
                 <div className="category-sec" key={index}>
-                    <h3><Linux />{category.category}</h3>
+                    <h3><Linux />{category.category} Category</h3>
                     <article className="article-sec">
                         {category.items.map((item, index) => (
                             <Link 

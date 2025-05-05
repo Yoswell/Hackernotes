@@ -1,5 +1,5 @@
 import { Cube, World } from "@/components/icons/Icons"
-import { menuItems } from "../constants/Machines"
+import { menuItems } from "@/components/constants/Machines"
 import { MenuItemSelected } from "@/App"
 import { useContext } from "react"
 
@@ -9,7 +9,7 @@ export function SecondaryMenu() {
     return (
         <aside className="secondary-menu">
             <div className="category-sec">
-                <h3><World />Topics</h3>
+                <h3><World />Topics viewed</h3>
                 <article className="article-sec article-tags">
                     {menuItems.map((a) => (
                         <>{a.items.map((item_sm) => (
@@ -23,7 +23,7 @@ export function SecondaryMenu() {
                 </article>
             </div>
             <div className="category-sec">
-                <h3><World />Social media</h3>
+                <h3><World />Social Media</h3>
                 <article className="article-sec">
                     <a href="https://app.hackthebox.com/profile/1934172" target="_blanck" rel="noonrefer noopener">Hackthebox</a>
                     <a href="https://www.linkedin.com/in/yoswel-badilla-cyberjr" target="_blanck" rel="noonrefer noopener">LinkedIn</a>
@@ -32,7 +32,7 @@ export function SecondaryMenu() {
                 </article>
             </div>
             <div className="category-sec">
-                <h3><Cube />Custom</h3>
+                <h3><Cube />Custom Files</h3>
                 <article className="article-sec">
                     <a>Bspwm</a>
                     <a>Polybar</a>

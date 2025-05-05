@@ -7,13 +7,13 @@
 ### Nmap:
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
-<div class="info">
+<div class="tip">
 
-> Reconnaissance or footprinting is the most critical phase of a pentest, and **Nmap** is the essential tool for it. Nmap automate the reconigtion avoiding that you depend of supositions or blind attacks.
+> Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
 ####
-```perl
+```ruby
 80/tcp   open  http
 135/tcp  open  msrpc
 445/tcp  open  microsoft-ds
@@ -43,7 +43,7 @@ echo '
 | /g | Especify the end of the sustitution |
 ####
 ### Nmap version:
-```perl
+```ruby
 PORT     STATE SERVICE      VERSION
 80/tcp   open  http         Microsoft IIS httpd 10.0
 |_http-server-header: Microsoft-IIS/10.0

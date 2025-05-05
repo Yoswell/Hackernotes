@@ -7,13 +7,13 @@
 ### Nmap:
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
-<div class="info">
+<div class="tip">
 
-> Reconnaissance or footprinting is the most critical phase of a pentest, and **Nmap** is the essential tool for it. Nmap automate the reconigtion avoiding that you depend of supositions or blind attacks.
+> Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
 ####
-```perl
+```ruby
 22/tcp    open  ssh
 2379/tcp  open  etcd-client
 2380/tcp  open  etcd-server
@@ -50,7 +50,7 @@ echo '
 ####
 Result of nmap scan:
 ####
-```perl
+```ruby
 PORT      STATE SERVICE          VERSION
 22/tcp    open  ssh              OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
 | ssh-hostkey: 
@@ -136,7 +136,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ####
 ####
 ####
-## Service that is running in the target machine
+## Services that are running in the target machine
 ### HTTP:
 In the target machine are running many *HTTP* services so we could try to enumerate them. The mayority ports, report us nothing interesting, but there one port that report us something different at the momentto start a enumeration proccess.
 ####
