@@ -123,7 +123,7 @@ sudo impacket-smbserver test $(pwd) -smb2support
 ####
 | Responder param | Description |
 | ----- | ----- |
-| -I | Especify the interface to start listen |
+| -I | Sspecify the interface to start listen |
 | -d | Enable answers for DHCP broadcast requests |
 | -w | Start the WPAD rogue proxy server |
 | -v | Verbose mode |
@@ -182,9 +182,9 @@ evil-winrm -i 10.10.11.106 -u tony -p liltony
 ####
 | Evil-winrm param | Description |
 | ----- | ----- |
-| -i | Epecify the target machine ip |
-| -u | Especify the user |
-| -p | Especify the password |
+| -i | Specify the ip target host |
+| -u | Sspecify the user |
+| -p | Sspecify the password |
 ####
 ####
 ####

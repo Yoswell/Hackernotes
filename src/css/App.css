@@ -75,8 +75,8 @@
 
 /*=== Normal Text ===*/
 p, li { color: var(--fg-02);line-height: 1.8; }
-strong {  color: var(--fg-01);  font-weight: 700; }
-em { font-style: normal;font-weight: 700; }
+strong {  color: var(--fg-01); font-size: 14px; font-weight: 700; }
+em { font-style: normal; font-size: 14px; font-weight: 700; }
 
 body {
     overflow: hidden;

@@ -7,31 +7,45 @@
 ### Clock skew too great:
 **Kerberos** is a network authentication protocol that uses encrypted tickets to verify identities in distributed systems. One of its fundamental security measures is **strict time synchronization** between clients and servers.
 ####
+<div class="tip">
+
+> Is time to perfom a deep analysis to fixed this error. 
+</div>
+
+####
+```ruby
+Kerberos(Clock Skew Too Great)
+```
+####
 Occurs when there's a time difference greater than **5 minutes** (by default) between the local clock and the DC[*Domain Controller*]. This protection prevents replay attacks where an attacker might attempt to reuse old tickets. In compromised environments or during penetration testing, this mechanism can block valid TGT [*Ticket Granting Ticket*] acquisition, preventing access to resources.
 ####
 ####
 ####
 ## Solution using ntpdate
 ### Ntpdate:
-The **ntpdate** command is a utility for setting and synchronizing the date and time of a computer system to match that of a reliable NTP [*Network Time Protocol*] server. By ensuring the system clock is accurate, ntpdate helps maintain system logs, schedule tasks, and ensure time-sensitive operations run effectively. Below are several use cases demonstrating how to effectively utilize the ntpdate command.
+The **ntpdate** command is a utility for setting and synchronizing the date and time of a computer system to match that of a reliable NTP [*Network Time Protocol*] server. By ensuring the system clock is accurate, ntpdate helps maintain system logs, schedule tasks, and ensure time-sensitive operations run effectively. But this protocol or service can not work, installed or available to distribution that you are using.
+####
+```ruby
+sudo systemctl status systemd-timesyncd          
+    Result ->
+        Unit systemd-timesyncd.service could not be found.
+```
 ####
 Synchronizing a computer internal clock is crucial in maintaining synchronization across clusters databases, and logging services. When systems operate on different times, anomalies may occu  to data corruption or erroneous log entries. Using sudo ntpdate host, an administrator can  computer clock adheres to a globally accepted time standard provided by a specific host stron or NTP server.
 ####
 ```ruby
-sudo ntpdate coloso.local
+ntpdate coloso.local
+    Result ->
+        2025-05-06 15:12:02.237340 (-0700) +3181.036456 +/- 0.059572 coloso.local 10.10.11.51 s1 no-leap
+        CLOCK: step_systime: Operation not permitted
 ```
 ####
 Under certain conditions, it might be necessary to enforce an instantaneous time adjustment rather than gradual
 syncing, for example avoiding time make use **slewed**, **settimeofday**.
 ####
 ```ruby
-sudo -b ntpdate coloso.local
+ntpdate -b coloso.local
 ```
-####
-<div class="img">
-    <img src="/machines/public/clockskew/1.png" loading="lazy" decoding="async" />
-</div>
-
 ####
 In many cases de the speed of the internet play a crucial role when you try to syncronize against a Domain Controller, in very useful to have so kwoledge in automation programing lenguajes.
 ####
@@ -53,12 +67,15 @@ The **faketime** tool intercepts system time-related calls, allowing application
 ####
 First we obtain the exact time from the Domain Controller via SMB, since this protocol doesn't have the same time restrictions as Kerberos and then we use faketime with the obtained time to generate our TGT. This step generates a `.ccache` file with a valid Kerberos ticket, synchronized with the *DC* time.
 ####
-```ruby
-date
-Get-Date
-time /t
-time
-```
+| Get date commands | Description |
+| ----- | ----- |
+| date /t | Displays only the current date | 
+| time /t | Displays only the current time |
+| date | Displays and allows you to modify the date |
+| Get-Date | Displays full date and time |
+| Get-Date -Format "dd/MM/yyyy" | Custom output date | 
+| Get-Date -Format "HH:mm:ss" | Hour in 24h format |
+| (Get-Date).DayOfWeek | Day of the week |
 ####
 Once we obtain the time of the DC or Windows, we must to pass that time to **faketime**:
 ####
@@ -75,7 +92,7 @@ That command is very important that was executed in the same line or in the same
 ####
 <div class="warning">
 
-> Is very important that the **faketime** comand was added in the same line without use [*pipes*, *xargs*] etc.
+> The **faketime** command must be added in the same line without use **pipes**, **xargs** etc.
 </div>
 
 ####
