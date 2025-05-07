@@ -232,7 +232,7 @@ hashcat -a 0 -m 120 hash /usr/share/wordlists/dictionary/rockyou.txt
 ####
 | Hashcat Param | Description |
 | ----- | ----- |
-| -a | Specifies brute force attacks [*Brute Force*] |
+| -a | Specifies brute force attacks *Brute Force* |
 | -m | Specifies the mode to use to crack the hash |
 ####
 The password for the **root** user is: `monkeybizness`.

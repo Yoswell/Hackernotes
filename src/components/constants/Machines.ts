@@ -121,6 +121,24 @@ export const menuItems = [
                     "Wfuzz"
                 ],
                 description: "SteamCloud is an easy difficulty machine. The port scan reveals that it has a bunch of Kubernetes specific ports open. We cannot not enumerate the Kubernetes API because it requires authentication. Now, as Kubelet allows anonymous access, we can extract a list of all the pods from the K8s cluster by enumerating the Kubelet service. Furthermore, we can get into one of the pods and obtain the keys necessary to authenticate into the Kubernetes API. We can now create and spawn a malicious pod and then use Kubectl to run commands within the pod to read the root flag."
+            },
+            { 
+                name: "Nocturnal",
+                difficulty: "easy",
+                tags: [
+                    "HTTP",
+                    "Upload File",
+                    "Caido",
+                    "PHP",
+                    "User enumeration",
+                    "Command Injection",
+                    "Url-encode",
+                    "LibreOffice",
+                    "Python",
+                    "Directory Listing",
+                    "SQlite3"
+                ],
+                description: "SteamCloud is an easy difficulty machine. The port scan reveals that it has a bunch of Kubernetes specific ports open. We cannot not enumerate the Kubernetes API because it requires authentication. Now, as Kubelet allows anonymous access, we can extract a list of all the pods from the K8s cluster by enumerating the Kubelet service. Furthermore, we can get into one of the pods and obtain the keys necessary to authenticate into the Kubernetes API. We can now create and spawn a malicious pod and then use Kubectl to run commands within the pod to read the root flag."
             }
         ]
     },
