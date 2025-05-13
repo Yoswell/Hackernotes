@@ -1,6 +1,6 @@
 import { useState, FC, useEffect } from "react"
 import { Search } from "@/components/icons/Icons"
-import { menuItems } from "@/components/constants/Machines"
+import { Machines } from "@/components/constants/Machines"
 
 export function SearchMachine() {
     const [valueSearch, setValueSearch] = useState('')
@@ -51,7 +51,7 @@ interface FilterSearchProps {
 }
 
 const FilterSearch: FC<FilterSearchProps> = ({ content }) => {
-    const filteredItems = menuItems.filter(item => 
+    const filteredItems = Machines.filter(item => 
         item.category.toLowerCase().includes(content.toLowerCase())
     )
 

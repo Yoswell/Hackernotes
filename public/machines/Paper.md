@@ -1,6 +1,14 @@
+<div class="banner">
+    <div class="ads">
+        <span></span>
+        Get Free - Docs template
+    </div>
+    <h1>
+        <span>¿By Vishok - Hacking Pentesting?</span>
+        Paper HTB
+    </h1>
+</div>
 
-# By vishok paper
-# htb writeup
 ####
 ####
 ####

@@ -3,83 +3,120 @@
     position: relative;
     align-items: flex-start;
     flex-direction: column;
-    overflow: hidden;
-    max-width: 270px;
-    min-width: 270px;
-    padding: 10px;
-    gap: 25px;
-    background-image: url('/Points.svg');
-    background-size: 80px;
+    overflow-y: scroll;
+    max-width: 280px;
+    min-width: 280px;
+    height: calc(100dvh - 60px);
+    border-radius: var(--rd-box);
+    border: 1px solid var(--bg-03);
 
-    &::before {
-        position: absolute;
-        content: '';
-        bottom: -50px;
-        left: 20px;
+    .tree {
         width: 100%;
-        height: 200px;
-        z-index: 1;
-        transform: rotate(90deg);
-        background-image: url('/bg-dots.webp');
-        background-size: 1000px;
-    }
-    
-    .category-sec {
-        width: 100%;
-        display: grid;
-        gap: 10px;
         
         h3 {
-            height: 35px;
             display: flex;
             align-items: center;
-            color: var(--fg-01);
-            gap: 10px;
             position: relative;
+            color: var(--fg);
+            font-weight: 500;
+            gap: 10px;  
+        }
+        
+        .float-span {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            font-weight: 500;
+            font-family: var(--font-01);
+        }
+        
+        span {
+            display: block;
+            max-width: 80%;
+            position: relative;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        
+        svg {
+            width: 26px;
+            padding: 5px;
+            stroke-width: 2px;
             background-color: var(--bg-02);
             border: 1px solid var(--bg-04);
             border-radius: 6px;
-            padding: 3px;
-
-            svg {
-                width: 26px;
-                padding: 5px;
-                stroke-width: 2px;
-                background-color: var(--bg-03);
-                border: 1px solid var(--bg-04);
-                border-radius: 4px;
-            }
+            z-index: 1;
+        }
+        
+        h4 {
+            display: flex;
+            align-items: center;
+            color: var(--fg);
+            font-weight: 500;
+            gap: 10px;
         }
 
-        .article-sec {
+        .tree-links {
             display: grid;
             position: relative;
 
             a {
+                gap: 10px;
                 width: 100%;
-                padding: 7px 25px;
+                padding: 7px 10px;
                 position: relative;
                 color: var(--fg-02);
                 text-decoration: none;
                 white-space: nowrap;
-                max-width: 100%;
-                text-overflow: ellipsis;
-                overflow: hidden;
 
                 &::before {
                     position: absolute;
                     content: '';
-                    top: 50%;
-                    left: 10px;
-                    transform: translateY(-50%);
-                    width: 2px;
-                    height: 25px;
-                    border-radius: var(--rd-box);
-                    background-color: var(--bg-04);
+                    top: -20px;
+                    left: -10px;
+                    width: 10px;
+                    height: 100%;
+                    border-left: 1px solid var(--bg-04);
+                    border-bottom: 2px solid var(--bg-04);
+                    border-bottom-left-radius: var(--rd-box);
                 }
             }
         }
     }
+
+    .tree-1, .tree-2 {
+        display: grid;
+        gap: 10px;
+    }
+
+    .tree-1 { padding: 20px; }
+    .tree-2 {
+        position: relative;
+        &::before {
+            position: absolute;
+            content: '';
+            top: -20px;
+            left: 10px;
+            width: 10px;
+            height: 100%;
+            border-left: 1px solid var(--bg-04);
+            border-bottom: 2px solid var(--bg-04);
+            border-bottom-left-radius: var(--rd-box);
+        }
+    }
+    .tree-2, .tree-links { padding-left: 20px; }
+}
+
+.primary-menu {
+    margin: 10px;
+    margin-right: 0;
+}
+
+.secondary-menu {
+    margin: 10px;
+    margin-left: 0;
 }
 
 @media screen and (max-width: 1420px) {

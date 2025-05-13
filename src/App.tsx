@@ -3,29 +3,29 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Nav } from '@/components/menus/Nav'
 import { Docs, DocsContent } from '@/components/pages/Docs'
 import { MarkdownViewer } from '@/components/MarkdowmViewer'
-import { menuItems } from '@/components/constants/Machines'
+import { Machines } from '@/components/constants/Machines'
 import { createContext, useEffect, useState } from 'react'
 import { SearchMachine } from './components/SearchMachine'
 
-export const MenuItemSelected = createContext<{ item: string; setSelectedItem: React.Dispatch<React.SetStateAction<string>> }>({
-    item: '',
+export const MenuItemSelected = createContext<{ selectedItem: string; setSelectedItem: React.Dispatch<React.SetStateAction<string>> }>({
+    selectedItem: '',
     setSelectedItem: () => {}
 })
 
 function App() {
-    const [item, setSelectedItem] = useState("")
+    const [selectedItem, setSelectedItem] = useState("")
 
     useEffect(() => {
         setSelectedItem("GoodGames")
     }, [])
 
     return (
-        <MenuItemSelected value={{item, setSelectedItem}}>              
+        <MenuItemSelected value={{selectedItem, setSelectedItem}}>              
         <BrowserRouter>
             <Nav />
             <Routes>
                 <Route path='/' element={<Docs />} />
-                {menuItems.map((item) => (
+                {Machines.map((item) => (
                     <>{item.items.map((item_sm, index) => (
                         <Route 
                             key={index}
@@ -40,7 +40,6 @@ function App() {
                 ))}
             </Routes>
             <SearchMachine />
-            <span className='scan-animate'></span>
         </BrowserRouter>
         </MenuItemSelected>
     )

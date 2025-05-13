@@ -1,60 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 
-:root {
+:root {    
     --bg-01: #040504;
     --bg-02: #0c0f0b;
     --bg-03: #151d14;
-    --bg-04: #1c251c;
+    --bg-04: #262d26;
+    --bg-05: #373e37;
 
-    --bg-01: #050609;
-    --bg-02: #0b0c0f;
-    --bg-03: #14161d;
-    --bg-04: #1c1f25;
-
-    --fg-01: #bec3d0;
-    --fg-02: #888c95;
+    --fg: #e0e0e5;
+    --fg-01: #959595;
+    --fg-02: #4f4f4f;
     --fg-03: #575a62;
-    --fg-url: #094d7d;
 
-    --orange-01: #ecaf8c;
-    --orange-02: #402b07;
-    --orange-03: #130c05;
+    --orange-01: #fdbf90;
+    --orange-02: #3e3b37;
+    --orange-03: #050504;
 
-    --blue-01: #8cccec;
-    --blue-02: #072f40;
-    --blue-03: #040c10;
+    --blue-01: #90e6fd;
+    --blue-02: #37383e;
+    --blue-03: #040405;
 
-    --red-01: #ec8c8c;
-    --red-02: #381a1a;
-    --red-03: #1a0909;
+    --gray-01: #afafaf;
+    --gray-02: #262d26;
+    --gray-03: #0c0f0b;
 
-    --purple-01: #b095f0;
-    --purple-02: #31205a;
-    --purple-03: #08051394;
-
-    --purple-hack-1: #6b529c;
-    --purple-hack-2: #6b529c3d;
-
-    --red-hack-1: #c53b53;
-    --red-hack-2: #c53b5269;
-
-    --code: "JetBrains Mono";
-    --font-01: "Game", sans-serif;
-    --font-02: "Manrope", sans-serif;
+    --code: "Geist Mono";
+    --font-01: "Ledsim";
+    --font-02: "Pacifico";
 
     --rd-box: 10px;
 }
 
 @font-face {
-    font-family: 'Game';
-    src: url('/fonts/Game.ttf') format(TrueType);
+    font-family: 'Ledsim';
+    src: url('/fonts/Ledsim.ttf') format(TrueType);
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Manrope';
-    src: url('/fonts/Manrope.ttf') format(TrueType);
+    font-family: 'Pacifico';
+    src: url('/fonts/Pacifico.ttf') format(TrueType);
     font-style: normal;
 }
 
@@ -62,78 +48,38 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 16px;
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
     font-family: var(--font-02);
+    font-family: "Geist", sans-serif;
 }
 
 /*=== Normal Text ===*/
-p, li { color: var(--fg-02);line-height: 1.8; }
-strong {  color: var(--fg-01); font-size: 14px; font-weight: 700; }
-em { font-style: normal; font-size: 14px; font-weight: 700; }
+p, li { color: var(--fg-01); line-height: 1.7; }
+strong {  color: var(--fg); font-weight: 500; }
+em { color: var(--fg); font-style: italic; font-weight: 500; }
 
 body {
     overflow: hidden;
     background-color: var(--bg-01);
 }
 
-.float-code {
-    position: absolute;
-    top: 30px;
-    color: var(--bg-03);
-    font-size: 15px;
-    font-family: var(--code);
-    mask-image: radial-gradient(var(--bg-01), transparent);
-    z-index: -1;
-}
-
 .docs-container {
     display: grid;
-    grid-template-columns: 1fr 10fr 1fr 100fr 1fr 10fr 1fr;
-    background-color: var(--bg-01);
+    position: relative;
+    overflow: hidden;
     max-width: 1420px;
-    height: 100vh;
     margin: 0 auto;
+    grid-template-columns: 1fr 10fr 100fr 10fr 1fr;
+    height: 100dvh;
 }
 
 .draw-line {
-    width: 10px;
+    width: 12px;
     height: 100%;
     background-image: url('/Lines.svg');
-    background-size: 80px;
-    outline: 1px solid var(--bg-03);
-    z-index: 10;
-}
-
-.scan-animate {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 2px;
-    background: linear-gradient(To left, transparent, var(--blue-01), var(--fg-01), var(--blue-01), transparent);
-    animation: scanner 20s linear infinite;
-    z-index: -10;
-}
-
-@keyframes scanner {
-    0% {
-        top: 0;
-    } 50% {
-        top: 90%;
-    } 100% {
-        top: 0%;
-    }
-}
-
-@media screen and (max-width: 1420px) {
-    .docs-container { 
-        margin: 0 40px;
-        grid-template-columns: 1fr 10fr 1fr 100fr 1fr;
-
-        .draw-line:last-child { display: none; }
-        .draw-line { outline: 1px solid var(--bg-03); }
-    }
+    background-size: 50px;
+    border-left: 1px solid var(--bg-03);
+    border-right: 1px solid var(--bg-03);
 }

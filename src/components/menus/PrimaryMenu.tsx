@@ -1,39 +1,87 @@
 import "@/css/Menu.css"
-import { Linux } from "@/components/icons/Icons"
+import { Cube, Difficulty } from "@/components/icons/Icons"
 import { Link } from "react-router-dom"
-import { menuItems } from "@/components/constants/Machines"
+import { Machines, Errors } from "@/components/constants/Machines"
 import { MenuItemSelected } from "@/App"
 import { useContext } from "react"
 
 export function PrimaryMenu() {
-    const { setSelectedItem } = useContext(MenuItemSelected)
+    const { selectedItem, setSelectedItem } = useContext(MenuItemSelected)
 
-    const selectItem = (id: string) => {
-        setSelectedItem(id)
-    }
+    const selectItem = (id: string) => { setSelectedItem(id) }
 
     return (
         <aside className="primary-menu">
-            {menuItems.map((category, index) => (
-                <div className="category-sec" key={index}>
-                    <h3><Linux />{category.category} Category</h3>
-                    <article className="article-sec">
+            {Machines.map((category, index) => (
+                <article className="tree tree-1" key={index}>
+                    <h3><Cube /><span>{category.category}</span><span className="float-span">SO</span></h3>
+                    <article className="tree tree-2">
+                        <h4 key={index}><Difficulty /><span>Easy</span></h4>
+                        <article className="tree tree-links">
+                            {category.items.map((item, index) => {
+                                if(item.difficulty == "Easy") {
+                                    return (
+                                        <Link 
+                                            to={`/machines/${item.name}`} 
+                                            key={index}
+                                            className={`${selectedItem == item.name && "active"} ${category.category == "Errors" && "empty-icon"}`}
+                                            onClick={() => selectItem(item.name)}>
+                                            <span>HTB {item.name}</span>
+                                        </Link>
+                                    )
+                                }
+                            })}
+                        </article>
+                        <h4 key={index}><Difficulty /><span>Medium</span></h4>
+                        <article className="tree tree-links">
+                            {category.items.map((item, index) => {
+                                if(item.difficulty == "Medium") {
+                                    return (
+                                        <Link 
+                                            to={`/machines/${item.name}`} 
+                                            key={index}
+                                            className={`${selectedItem == item.name && "active"}`}
+                                            onClick={() => selectItem(item.name)}>
+                                            <span>HTB {item.name}</span>
+                                        </Link>
+                                    )
+                                }
+                            })}
+                        </article>
+                        <h4 key={index}><Difficulty /><span>Hard</span></h4>
+                        <article className="tree tree-links">
+                            {category.items.map((item, index) => {
+                                if(item.difficulty == "Hard") {
+                                    return (
+                                        <Link 
+                                            to={`/machines/${item.name}`} 
+                                            key={index}
+                                            className={`${selectedItem == item.name && "active"}`}
+                                            onClick={() => selectItem(item.name)}>
+                                            <span>HTB {item.name}</span>
+                                        </Link>
+                                    )
+                                }
+                            })}
+                        </article>
+                    </article>
+                </article>
+            ))}
+            {Errors.map((category, index) => (
+                <article className="tree tree-1" key={index}>
+                    <h3><Cube /><span>{category.category}</span></h3>
+                    <article className="tree tree-links">
                         {category.items.map((item, index) => (
                             <Link 
                                 to={`/machines/${item.name}`} 
                                 key={index}
-                                onClick={() => selectItem(item.name)}
-                                className={`
-                                    ${item.difficulty === "easy" && "easy"}
-                                    ${item.difficulty === "medium" && "medium"}
-                                    ${item.difficulty === "hard" && "hard"}
-                                `}>
-                                {category.category != "Common Errors" && "Hackthebox "}
-                                {item.name}
+                                className={`${selectedItem == item.name && "active"}`}
+                                onClick={() => selectItem(item.name)}>
+                                <span>{item.name}</span>
                             </Link>
                         ))}
                     </article>
-                </div>
+                </article>
             ))}
         </aside>
     )

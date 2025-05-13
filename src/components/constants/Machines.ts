@@ -1,10 +1,10 @@
-export const menuItems = [
+export const Machines = [
     {
         category: "Linux",
         items: [
             { 
                 name: "GoodGames", 
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "SQL Injection",
                     "Wfuzz",
@@ -23,7 +23,7 @@ export const menuItems = [
             },
             { 
                 name: "Bizness",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "Gobuster",
                     "Wfuzz",
@@ -42,7 +42,7 @@ export const menuItems = [
             },
             { 
                 name: "Paper",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "HTTP",
                     "Wordpress 5.2.3",
@@ -56,7 +56,7 @@ export const menuItems = [
             },
             { 
                 name: "Usage",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "Wffuz",
                     "Burpsuite",
@@ -72,7 +72,7 @@ export const menuItems = [
             },
             { 
                 name: "Writeup",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "CMS Made Simple 2.2.9",
                     "Python",
@@ -89,7 +89,7 @@ export const menuItems = [
             },
             { 
                 name: "Precious",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "HTTP",
                     "Caido",
@@ -106,7 +106,7 @@ export const menuItems = [
             },
             { 
                 name: "SteamCloud",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "HTTP",
                     "HTTPS",
@@ -124,7 +124,7 @@ export const menuItems = [
             },
             { 
                 name: "Nocturnal",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "HTTP",
                     "Upload File",
@@ -147,7 +147,7 @@ export const menuItems = [
         items: [
             { 
                 name: "Support",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "Gobuster",
                 ],
@@ -155,7 +155,7 @@ export const menuItems = [
             },
             { 
                 name: "Driver",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "HTTP",
                     "SCF File",
@@ -175,7 +175,7 @@ export const menuItems = [
             },
             { 
                 name: "EscapeTwo",
-                difficulty: "easy",
+                difficulty: "Easy",
                 tags: [
                     "Evil-winrm",
                     "SMB",
@@ -204,7 +204,10 @@ export const menuItems = [
                 description: "Active machine, the active machine no posses information about it. That informations is only available when Hackthebox retired this machine."
             }
         ]
-    },
+    }
+]
+
+export const Errors = [
     {
         category: "Errors",
         items: [

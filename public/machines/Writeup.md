@@ -1,10 +1,19 @@
-# By vishok writeup
-# htb writeup
+<div class="banner">
+    <div class="ads">
+        <span></span>
+        Get Free - Docs template
+    </div>
+    <h1>
+        <span>¿By Vishok - Hacking Pentesting?</span>
+        Writeup HTB
+    </h1>
+</div>
+
 ####
 ####
 ####
 ## Open ports in the target machine
-### Nmap:
+### Nmap
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
 <div class="tip">
@@ -37,21 +46,18 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ####
 ####
 ## Services that are running in the target machine
-### HTTP:
-In the previus nmap scan we realese that in the *HTTP* service there are 2 important things; the **robots.txt** file and `/writeup` directory. When we try to open the browser and see the content of the *robots.txt* file, we see that there is a *writeup* directory. This directory seems see a writeups blog. The page is blank, with no login or registration sections, so we will perform enumeration to find more things. Although this aproximation **not work**, because the target machine for some reason in particulary **block** the remote connection:
+### Http
+In the previus nmap scan we realese that in the *HTTP* service there are 2 important things; the `robots.txt` file and `writeup/` directory. When we try to open the browser and see the content of the robots file, we see that there is a `writeup/` directory.
 ####
-<div class="img">
-    <img src="/machines/public/writeup/1.png" loading="lazy" decoding="async" />
-</div>
-
+This directory seems see a writeups blog. The page is blank, with no login or registration sections, so we will perform enumeration to find more things. Although this aproximation **not work**, because the target machine for some reason in particulary **block** the remote connection:
 ####
 ```perl
 UserWarning:Fatal exception: Pycurl error 7: Failed to connect to 10.10.10.138 port 80 after 384 ms: Couldn't connect to server
 ```
 ####
-The web application is very empty, this no posses version of any type, if we enter into any writeup, we can see that the url change and use a **php** parameter that pointing does something look like a file: http://writeup.htb/writeup/index.php?page=ypuffy. So having this information, we could to aim aginst other files: http://writeup.htb/writeup/index.php?page=../../../../../etc/passwd. But this not work.
+The web application is very empty, this no posses version of any type, if we enter into any writeup, we can see that the url change and use a **php** parameter that pointing does something look like a file: http://writeup.htb/writeup/index.php?page=ypuffy. So having this information, we could to aim aginst other files: http://writeup.htb/writeup/index.php?page=../../../../../etc/passwd. 
 ####
-So **whatweb** in many ocations is very hepful to discover the versions of the services that running in the target machine, so if we execute the following command:
+But this not work. So **whatweb** in many ocations is very hepful to discover the versions of the services that running in the target machine, so if we execute the following command:
 ####
 ```perl
 whatweb http://10.10.10.138
@@ -79,18 +85,18 @@ The result of the command is:
         <nav id="menu">
 ```
 ####
-We are able to see that the target machine is running [*CMS Made Simple 2.2.9*], the representation is: `2`004-`2`01`9`, so we will try to exploit this version looking for any exploit in databases like **github** and **exloit-db**.
+We are able to see that the target machine is running a: (*CMS Made Simple 2.2.9*), the representation is: 2004-2019, so we will try to exploit this version looking for any exploit in databases like **github** and **exloit-db**.
 ####
 <div class="info">
 
-> **CMS Made Simple** is an Open Source Content Management System. It’s built using **PHP** and the Smarty Engine, which keeps content, functionality, and templates separated.
+> **CMS Made Simple** is an Open Source Content Management System. It’s built using *PHP* and the Smarty Engine, which keeps content, functionality, and templates separated.
 </div>
 
 ####
 ####
 ####
 ## First explotation phase
-### SQLI
+### SQLi
 At the moment to looking for exploit for this version service, we discovered two options: 
 ####
 - Exploits:
@@ -99,13 +105,13 @@ At the moment to looking for exploit for this version service, we discovered two
 ####
 <div class="warning">
 
-> **CMS Made Simple** version **2.2.9** is vulnerable to SQLi [SQL Injection], which can be exploited to extract sensitive information from the database. Additionally, there are other vulnerabilities affecting earlier versions of CMS Made Simple, such as RCE [Remote code execution] and XSS [Cross-site scripting] issues.
+> **CMS Made Simple** version (*2.2.9*) is vulnerable to SQLi (*SQL Injection*), which can be exploited to extract sensitive information from the database. Additionally, there are other vulnerabilities affecting earlier versions of CMS Made Simple, such as RCE (*Remote code execution*) and XSS (*Cross-site scripting*) issues.
 </div>
 
 ####
 The *RCE* is based in authenticated user, so we need to have valid credentials, the other seem to have a better aproximation beacause **dump** the `user`, `password` and `salt`. Next we will explain how work this script. The most importar in all cases are the **username** and **password**.
 ####
-We already now a hint, `/writeup` directory, so we will try execute this fill pointing to this directory. The script craft a **function** to dump the data:
+We already now a hint, `writeup/` directory, so we will try execute this fill pointing to this directory. The script craft a **function** to dump the data:
 ####
 ```python
 def dump_username():
@@ -141,7 +147,9 @@ The payload look like this SQL query:
 SELECT sleep(1) FROM cms_users WHERE username LIKE 0x{dictionary[i]}25 AND user_id LIKE 0x31--
 ```
 ####
-Well, the first statement of the SQL query is very simple, the script is selecting a `sleep` of `1` second and is using the **cms_users** table. But what meaning the rest of the query? The `LIKE` command in SQL is used to compare the value of the column with anything. So in this case, the script is comparing the value of the column `username` with the value of the variable `db_name` and the value of the column `user_id` with the value of the variable `user_id`.
+Well, the first statement of the SQL query is very simple, the script is selecting a `sleep` of `1` second and is using the **cms_users** table. But what meaning the rest of the query? The `LIKE` command in SQL is used to compare the value of the column with anything. 
+####
+So in this case, the script is comparing the value of the column `username` with the value of the variable `db_name` and the value of the column `user_id` with the value of the variable `user_id`.
 ####
 The `db_name` is a character string that is in the **dictionary**. The `user_id` is a number in this case is `1` beacause in all databases the first user usually be the **admin**. The `LIKE` command start comparing the first character, so is very similar to indicate this:
 ####
@@ -209,7 +217,7 @@ So after that, the payload report us the next information:
 [+] Password found: 62def4866937f08cc13bab43bb14e6f7
 ```
 ####
-The password seem to be encrypted, so we will try to crack it using a wordlist. The encription format look to be *MD5*, so we will use a wordlist to try to crack it using **hashca**, this tool if we execute without especified a **mode**, it analized the hash format a suggest us for the posible hash modes to crack it.
+The password seem to be encrypted, so we will try to crack it using a wordlist. The encription format look to be *MD5*, so we will use a wordlist to try to crack it using **hashcat**, this tool if we execute without especified a **mode**, it analized the hash format a suggest us for the posible hash modes to crack it.
 ####
 ```bash
 hashcat -a 0 hash /usr/share/wordlists/dictionary/rockyou.txt
@@ -241,7 +249,7 @@ The following 20 hash-modes match the structure of your input hash:
      23 | Skype                                                      | Instant Messaging Service
 ```
 ####
-We have the **salt** and **password** so the format with both is: `0x929292:0x92282291`, following this structure we only have two posible options: *10* and *20* hash mode. The password cracked is: `raykayjay9`. We already have the username and the *22* port in the target machine is open, so we will try to autenticate in it: `ssh jkr@writeup.htb`.
+We have the **salt** and **password** so the format with both is: `******:******`, following this structure we only have two posible options: `10` and `20` hash mode. The password cracked is: `raykayjay9`. We already have the username and the `22` port in the target machine is open, so we will try to autenticate in it: `ssh jkr@writeup.htb`.
 ####
 | Hashcat param | Description |
 | ----- | ----- |
@@ -260,7 +268,7 @@ uid=1000(jkr) gid=1000(jkr) groups=1000(jkr),24(cdrom),25(floppy),29(audio),30(d
 ####
 <div class="info">
 
-> The group **staff** on Linux/Unix systems it is traditionally used to grant its members certain additional permissions that normal users do not have, but without giving them full administrator (**root privileges**). For example, on some distributions, users in staffThey may create files in system directories where normally only root could do so, or they may have permissions to use certain commands or access restricted resources. 
+> The group **staff** on Linux/Unix systems it is traditionally used to grant its members certain additional permissions that normal users do not have, but without giving them full administrator (*root privileges*). For example, on some distributions, users in staff. They may create files in system directories where normally only root could do so, or they may have permissions to use certain commands or access restricted resources. 
 </div>
 
 ####

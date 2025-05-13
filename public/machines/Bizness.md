@@ -1,5 +1,14 @@
-# By vishok bizness
-# htb writeup
+<div class="banner">
+    <div class="ads">
+        <span></span>
+        Get Free - Docs template
+    </div>
+    <h1>
+        <span>¿By Vishok - Hacking Pentesting?</span>
+        Bizness HTB
+    </h1>
+</div>
+
 ####
 ####
 ####
@@ -116,13 +125,11 @@ We are not in the **sudoers** group, there are no *SUID* permissions, nor capabi
 ####
 We see what could be the hash of a password encoded with *SHA*, but this hash is not crackable because it is missing the **Salt**. Our task will be to continue searching for more information to complete that hash. In the `/opt/ofbiz/runtime/data` directory, there is a directory called `/derby`. Investigating this, we find that **Derby** is a different kind of database, its structure is organized in directories and files, so if we go into that directory we will find all the database information in files. These are found inside `/seg0`.
 ####
-####
 <div class="info">
 
 > To use Derby, you can download it from the official Apache Derby page and configure the CLASSPATH to include the necessary jar files, such as **derby.jar** and **derbytools.jar**. Once configured, you can use the `ij` utility to create and manage databases by running SQL commands.
 </div>
 
-####
 ####
 There are many files, so filtering will help us find information faster. We know *SHA* is used and the field appears to be **currentPassword**, so we will filter to find this information more quickly:
 ####

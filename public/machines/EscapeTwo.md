@@ -1,10 +1,19 @@
-# By vishok escapetwo
-# htb writeup
+<div class="banner">
+    <div class="ads">
+        <span></span>
+        Get Free - Docs template
+    </div>
+    <h1>
+        <span>¿By Vishok - Hacking Pentesting?</span>
+        EscapeTwo HTB
+    </h1>
+</div>
+
 ####
 ####
 ####
 ## Open ports in the target machine
-### Nmap:
+### Nmap
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
 <div class="tip">
@@ -75,13 +84,10 @@ echo '
 ' | grep -oE '^([0-9])+' | sed -z 's/\n/,/g'
 ```
 ####
-| Grep param | Description |
+| Grep and sed param | Description |
 | ----- | ----- |
 | -o | Make unique matches |
 | -E | Find other results into a unique string |
-####
-| Sed param | Description |
-| ----- | ----- |
 | -z | Separate lines for each null character, is used to sustitute |
 | s/ | Especify the start of the sustitution |
 | /g | Especify the end of the sustitution |
@@ -168,7 +174,7 @@ Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
 ####
 ####
 ## Services that is running in target machine
-### SMB:
+### SMB
 So this machine have many ports, many services, so is many information to analyse. The Hackthebox give us a credentials simulating a real pentest environment, so we can use this credentials to connect to the target machine. The credentials are: `rose:KxEPkKe6R8su`. The port *5985* is open, so we can use this port to connect to the target machine using **evil-winrm**, but this is not possible. But there are other services: [*SMB*, *LDAP*].
 ####
 Having a valid credentials, we could try to enumerate a shared resources using **netexec**:
@@ -316,7 +322,7 @@ Is necessary that the final if will be executed changed the column numbers: `if(
 ####
 ####
 ## First explotation phase
-### MSSQL:
+### MSSQL
 So in the previous output parte data we saw a credential related with that service: `sa:MSSQLP@ssw0rd!`, so we could try ro connect at this service using **impacket**.
 ####
 ```ruby
@@ -444,7 +450,7 @@ evil-winrm -i 10.10.11.51 -u ryan -p WqSZAF6CysDQbGb3
 ####
 ####
 ## Second exploit phase (Privilage Escalation)
-### WriteOwner:
+### WriteOwner
 If we execute a **bloodhound-python** in our machine aginst the target machine to discover a potential vector of explotation, we are able to see that the user `ryan` have *WriteOwner* permissions over `ca_svc`. So the **impacket** suite have 2 tools that will help us to exploit this aproach because the `ca_svc` user is the other unique user, so the privilage escalation is for here.
 ####
 First, we need to change the **ownership** `ca_svc` account. The user that we posses credentials to gain access in the target machine is **ryan** and he have that permissions so we will try to be the owner of that account.

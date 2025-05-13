@@ -16,9 +16,8 @@ export function Docs() {
 export const DocsContent : FC<{children: ReactNode}> = ({children}) => {
     return (
         <main className="docs-container">
-            <div className="draw-line"></div>
+            <div className="draw-line line-1"></div>
             <PrimaryMenu />
-            <div className="draw-line"></div>
 
             {/* Content scroll */}
             <div className="fluid-container">
@@ -33,9 +32,8 @@ export const DocsContent : FC<{children: ReactNode}> = ({children}) => {
             </div>
             {/* Content scroll */}
             
-            <div className="draw-line"></div>
             <SecondaryMenu />
-            <div className="draw-line"></div>
+            <div className="draw-line line-2"></div>
         </main>
     )
 }

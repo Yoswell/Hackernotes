@@ -5,20 +5,11 @@ header {
     height: 60px;
     display: grid;
     place-items: center;
-    grid-template-columns: 1fr 10fr 1fr 100fr 1fr 10fr 1fr;
-    z-index: 1000;
-    border-bottom: 1px solid var(--bg-04);
+    grid-template-columns: 100fr 1fr;
     background-color: var(--bg-01);
-
-    h1 { 
-        padding: 0 20px;
-        min-width: 270px;
-        width: 100%;
-        font-weight: 400;
-        font-size: 23px;
-        color: var(--fg-01);
-        font-family: var(--font-01); 
-    }
+    border-bottom: 1px solid var(--bg-03);
+    border-left: 1px solid var(--bg-03);
+    border-right: 1px solid var(--bg-03);
 
     .cont-links {
         width: 100%;
@@ -28,6 +19,7 @@ header {
         align-items: center;
         height: 35px;
         gap: 10px;
+        border-left: 1px solid var(--bg-04);
 
         a {
             width: 100%;
@@ -39,65 +31,52 @@ header {
             font-weight: 600;
             color: var(--fg-01);
             font-size: 14px;
-            border-radius: 6px;
-            border: 1px solid var(--bg-04);
-            background-color: var(--bg-02);
-            background-image: url('/Lines.svg');
-            background-size: 60px;
+            border-radius: var(--rd-box);
+            box-shadow: inset 0 0 5px var(--bg-05);
+            background-color: var(--bg-01);
         }
     }
 }
 
 .search-cont {
     width: 100%;
-    display: grid;
-    place-items: center;
-    gap: 8px;
     padding: 0 10px;
     
     .search {
         height: 35px;
         width: 100%;
         display: flex;
-        position: relative;
         align-items: center;
+        gap: 8px;
+        position: relative;
         flex-wrap: nowrap;
-        border: 1px solid var(--bg-04);
         background-color: var(--bg-02);
-        border-radius: 6px;
-        padding: 0 10px;
+        border: 1px solid var(--bg-03);
+        border-radius: var(--rd-box);
+        padding: 0 5px 0 10px;
         
         svg {
             width: 20px;
-            stroke-width: 2.3px;
+            stroke-width: 2.2px;
             color: var(--fg-01);
         }
 
-        input {
+        span {
             width: 100%;
-            border: none;
-            outline: none;
             font-size: 14px;
-            font-weight: 500;
-            padding-left: 10px;
             color: var(--fg-01);
-            background-color: transparent;
         }
 
-        .cont-commands {
+        .command {
             display: flex;
             align-items: center;
-            gap: 5px;
-            
-            span {
-                display: grid;
-                place-content: center;
-                white-space: nowrap;
-                color: var(--fg-01);
-                font-size: 12px;
-                font-weight: 800;
-                border-radius: 6px;
-            }
+            white-space: nowrap;
+            padding: 4px 10px;
+            font-weight: 600;
+            border-radius: calc(8px - 1px);
+            font-size: 12px;
+            color: var(--fg);
+            background-color: var(--bg-04);
         }
     }
 }

@@ -1,5 +1,14 @@
-# By vishok kerberos
-# error fized
+<div class="banner">
+    <div class="ads">
+        <span></span>
+        Get Free - Docs template
+    </div>
+    <h1>
+        <span>¿By Vishok - Hacking Pentesting?</span>
+        Clock Skew Too Great
+    </h1>
+</div>
+
 ####
 ####
 ####

