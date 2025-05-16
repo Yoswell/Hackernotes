@@ -36,10 +36,8 @@ export function SearchMachine() {
                             placeholder="Search specific and precise tags... "
                             onChange={(e) => setValueSearch(e.target.value)}>
                         </input>
-                        <div className="cont-commands">
-                            <span>(Escape) to close</span>
-                        </div>
                     </div>
+                    <span className="command">(Escape) to close</span>
                 </article>
             </div>
         </section>

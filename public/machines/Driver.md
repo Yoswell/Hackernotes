@@ -48,7 +48,8 @@ echo '
 | s/ | Especify the start of the sustitution |
 | /g | Especify the end of the sustitution |
 ####
-### Nmap version
+Result of nmap scan:
+####
 ```ruby
 PORT     STATE SERVICE      VERSION
 80/tcp   open  http         Microsoft IIS httpd 10.0

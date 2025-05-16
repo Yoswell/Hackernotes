@@ -1,11 +1,8 @@
 <div class="banner">
-    <div class="ads">
-        <span></span>
-        Get Free - Docs template
-    </div>
+    <div class="ads"><span>𔑸</span> Offensive Security</div>
     <h1>
-        <span>¿By Vishok - Hacking Pentesting?</span>
-        GoodGames HTB
+        <span>Vishok - Hacking Pentesting</span>
+        GoodGames HTB Writeup
     </h1>
 </div>
 
@@ -13,7 +10,7 @@
 ####
 ####
 ## Open ports in target machine
-### Nmap:
+### Nmap
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
 <div class="tip">
@@ -29,20 +26,19 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 ####
 ####
 ## Services that are running in the target machine
-### HTTP:
+### HTTP
 If we access the website using the domain reported by **nmap**: http://goodgames.htb, we won't find anything; it's a video game store-type website, but we see no extra information such as a login or registration link. At this point, the obvious thing to do is enumeration to discover directories or files. Let's use **wfuzz**:
 ####
 ```js
 wfuzz -c -u 'http://goodgames.htb/FUZZ' -w /usr/share/wordlists/dictionary/web-content/directory-list-lowercase-2.3-medium.txt -t 150 --hw 548,5548
 ```
 ####
-| Wfuzz Param | Description |
-| ----- | ----- |
-| -c | Colors the displayed results |
-| -u | Specifies the URL of the site to enumerate |
-| -w | Specifies the path to the wordlist to use |
-| -t | Specifies the number of parallel tasks to launch |
-| --hw | (*Hide Word*) Hides results with a specific word count |
+- ##### Wfuzz Param
+    - `-c` Colors the displayed results
+    - `-u` Specifies the URL of the site to enumerate 
+    - `-w` Specifies the path to the wordlist to use 
+    - `-t` Specifies the number of parallel tasks to launch 
+    - `--hw` Hides results with a specific word count 
 ####
 The gobuster report us the nex information:
 ####
@@ -78,14 +74,13 @@ Payload: email=-7226'
     NULL,NULL-- -&password=12345
 ```
 ####
-| Sqlmap Param | Description |
-| ----- | ----- |
-| --tables | Enumerates tables |
-| --columns | Enumerates columns |
-| -r | XML file with the request |
-| -T | Specifies the table to dump |
-| --dbs | Database discovery |
-| --dump | Dumps tables or columns as specified |
+- ##### Sqlmap Param
+    - `--tables` Enumerates tables
+    - `--columns` Enumerates columns
+    - `-r` XML file with the request
+    - `-T` Specifies the table to dump
+    - `--dbs` Database discovery
+    - `--dump` Dumps tables or columns as specified
 ####
 ### SQLI discovery databases:
 Now that we know it can be exploited with injections: [*Time Based*, *Union Query*], we can use the **dbs** parameter to dump the database contents.
@@ -115,35 +110,14 @@ In this case, sqlmap conveniently dumped the contents of the **user** table colu
 ####
 ## First exploitation phase
 ### Subdomain:
-When we log in as **admin**, at the top there's a nav with a **settings** icon; clicking it takes us to a new subdomain: http://internal-administration.goodgames.htb/. If we add it to `/etc/hosts` and access it, it takes us to the following section:
-####
-<div class="img">
-    <img src="/machines/public/goodgames/1.png" loading="lazy" decoding="async" />
-</div>
+When we log in as **admin**, at the top there's a nav with a **settings** icon; clicking it takes us to a new subdomain: http://internal-administration.goodgames.htb/. If we add it to `/etc/hosts` and access it, it takes us a *Flask Volt* login panel.
 
 ####
 It appears to be an administration dashboard; we don't know the credentials, but we have those for **admin**, so if we try `admin:superadministrator`, we gain access as the admin user in the dashboard. Earlier we saw **Flask**, so Python might be running in the background.
 ####
-If we start browsing, we see nothing; there are sections and buttons without actions. But there is a section to configure the personal information of the **admin** user.
+If we start browsing, we see nothing; there are sections and buttons without actions. But there is a section to configure the personal information of the **admin** user. This form is functional, so if we fill in the information, some section should update.
 ####
-<div class="img">
-    <img src="/machines/public/goodgames/2.png" loading="lazy" decoding="async" />
-</div>
-
-####
-This form is functional, so if we fill in the information, some section should update:
-####
-<div class="img">
-    <img src="/machines/public/goodgames/3.png" loading="lazy" decoding="async" />
-</div>
-
-####
-If we see our input reflected in the form, it could be a clear indication that this section is vulnerable to SSTI [*Server Side Template Injection*], and since Python with **Flask** is running in the background, it could be vulnerable to **Jinja**, for example. Let's test by entering `{{7*7}}` in the `Full name` field.
-####
-<div class="img">
-    <img src="/machines/public/goodgames/4.png" loading="lazy" decoding="async" />
-</div>
-
+If we see our input reflected in the form, it could be a clear indication that this section is vulnerable to SSTI [*Server Side Template Injection*], and since Python with **Flask** is running in the background, it could be vulnerable to **Jinja**, for example. Let's test by entering `{{7*7}}` in the `full_name` field.
 ####
 Indeed, the result of the operation is reflected in the **Profile Card**. We need to look for payloads that use double curly braces `{{` to try to generate a reverse shell and gain access to the victim machine.
 ####
@@ -198,9 +172,8 @@ if __name__ == '__main__':
     main()
 ```
 ####
-| Script param | Description |
-| ----- | ----- |
-| </dev/tcp | The less-than symbol before **/dev/tcp** indicates data will be sent, not connections; if it responds, the port is active. |
+- ##### Script param
+    - `</dev/tcp` The less-than symbol before **/dev/tcp** indicates data will be sent, not connections; if it responds, the port is active.
 ####
 We see in the terminal that the script reports port **22** open, we have the users `root` and `augustus`. We could try the password for the container's admin user, which is: `superadministrator`, so we gain access as the augustus user.
 ####

@@ -1,20 +1,27 @@
-import { Search } from "@/components/icons/Icons"
+import { Code, Idioma, Search } from "@/components/icons/Icons"
 import "@/css/Nav.css"
 
 export function Nav() {
     return (
         <header>
-            <article className="search-cont">
-                <div className="search">
-                    <Search />
-                    <span>Search specific and precise tags...</span>
-                    <div className="command">Ctrl K</div>
+            <nav>
+                <h1>Hackernotes</h1>
+                <article className="search-cont">
+                    <div className="search">
+                        <Search />
+                        <span>Search specific and precise tags...</span>
+                    </div>
+                </article>
+                <div className="cont-links">
+                    <a><Idioma />Translate</a>
+                    <a><Code />Ctrl K / open search</a>
                 </div>
-            </article>
-            <div className="cont-links">
-                 <a>Log In</a>
-                 <a>Sign Up</a>
-            </div>
+            </nav>
+            <nav className="second-nav">
+                <a className="active">Documentation</a>
+                <a>Exploits</a>
+                <a>Python Tools</a>
+            </nav>
         </header>
     )
 }

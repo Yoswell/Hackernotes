@@ -22,24 +22,26 @@ function App() {
     return (
         <MenuItemSelected value={{selectedItem, setSelectedItem}}>              
         <BrowserRouter>
-            <Nav />
-            <Routes>
-                <Route path='/' element={<Docs />} />
-                {Machines.map((item) => (
-                    <>{item.items.map((item_sm, index) => (
-                        <Route 
-                            key={index}
-                            path={`/machines/${item_sm.name}`} 
-                            element={
-                                <DocsContent>
-                                    <MarkdownViewer filePath={`/machines/${item_sm.name}.md`} key={index} />
-                                </DocsContent>
-                            }>
-                        </Route>
-                    ))}</>
-                ))}
-            </Routes>
-            <SearchMachine />
+            <div className='docs-container'>
+                <Nav />
+                <Routes>
+                    <Route path='/' element={<Docs />} />
+                    {Machines.map((item) => (
+                        <>{item.items.map((item_sm, index) => (
+                            <Route 
+                                key={index}
+                                path={`/machines/${item_sm.name}`} 
+                                element={
+                                    <DocsContent>
+                                        <MarkdownViewer filePath={`/machines/${item_sm.name}.md`} key={index} />
+                                    </DocsContent>
+                                }>
+                            </Route>
+                        ))}</>
+                    ))}
+                </Routes>
+                <SearchMachine />
+            </div>
         </BrowserRouter>
         </MenuItemSelected>
     )

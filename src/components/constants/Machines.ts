@@ -212,7 +212,7 @@ export const Errors = [
         category: "Errors",
         items: [
             { 
-                name: "Kerberos Clock Skew Too Great",
+                name: "Clock Skew Too Great",
                 difficulty: "",
                 tags: [
                     "Ntpdate",

@@ -4,32 +4,33 @@
 :root {    
     --bg-01: #040504;
     --bg-02: #0c0f0b;
-    --bg-03: #151d14;
-    --bg-04: #262d26;
+    --bg-03: #1a1e1a;
+    --bg-04: #282c28;
     --bg-05: #373e37;
+    --bg-06: #080a08b8;
 
     --fg: #e0e0e5;
     --fg-01: #959595;
     --fg-02: #4f4f4f;
     --fg-03: #575a62;
 
-    --orange-01: #fdbf90;
+    --orange-01: #cbbdaf;
     --orange-02: #3e3b37;
     --orange-03: #050504;
 
-    --blue-01: #90e6fd;
+    --blue-01: #afb4cb;
     --blue-02: #37383e;
     --blue-03: #040405;
 
-    --gray-01: #afafaf;
-    --gray-02: #262d26;
-    --gray-03: #0c0f0b;
+    --gray-01: #b3afcb;
+    --gray-02: #28262d;
+    --gray-03: #0c0b0f;
 
     --code: "Geist Mono";
     --font-01: "Ledsim";
     --font-02: "Pacifico";
 
-    --rd-box: 10px;
+    --rd-box: 15px;
 }
 
 @font-face {
@@ -56,7 +57,7 @@
 }
 
 /*=== Normal Text ===*/
-p, li { color: var(--fg-01); line-height: 1.7; }
+p { color: var(--fg-01); line-height: 1.7; }
 strong {  color: var(--fg); font-weight: 500; }
 em { color: var(--fg); font-style: italic; font-weight: 500; }
 
@@ -65,21 +66,28 @@ body {
     background-color: var(--bg-01);
 }
 
-.docs-container {
-    display: grid;
-    position: relative;
-    overflow: hidden;
+.main-container {
     max-width: 1420px;
     margin: 0 auto;
-    grid-template-columns: 1fr 10fr 100fr 10fr 1fr;
+    display: grid;
+    grid-template-columns: 1fr 100fr 1fr;
     height: 100dvh;
 }
 
 .draw-line {
-    width: 12px;
-    height: 100%;
     background-image: url('/Lines.svg');
     background-size: 50px;
     border-left: 1px solid var(--bg-03);
     border-right: 1px solid var(--bg-03);
+}
+
+.draw-line {
+    min-width: 12px;
+    max-width: 12px;
+    height: 100%;
+    z-index: 10;
+}
+
+@media screen and (max-width: 1500px) {
+    .docs-container { padding: 0 40px; }
 }

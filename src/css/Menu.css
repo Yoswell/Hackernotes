@@ -7,8 +7,6 @@
     max-width: 280px;
     min-width: 280px;
     height: calc(100dvh - 60px);
-    border-radius: var(--rd-box);
-    border: 1px solid var(--bg-03);
 
     .tree {
         width: 100%;
@@ -29,11 +27,19 @@
             transform: translateY(-50%);
             font-weight: 500;
             font-family: var(--font-01);
+
+            svg {
+                background-color: transparent;
+                color: var(--fg-01);
+                border: none;
+                stroke-width: 4px;
+                width: 20px;
+            }
         }
         
         span {
             display: block;
-            max-width: 80%;
+            max-width: 95%;
             position: relative;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -41,21 +47,13 @@
         }
         
         svg {
-            width: 26px;
+            width: 25px;
+            height: 25px;
             padding: 5px;
-            stroke-width: 2px;
             background-color: var(--bg-02);
             border: 1px solid var(--bg-04);
             border-radius: 6px;
-            z-index: 1;
-        }
-        
-        h4 {
-            display: flex;
-            align-items: center;
-            color: var(--fg);
-            font-weight: 500;
-            gap: 10px;
+            z-index: 2;
         }
 
         .tree-links {
@@ -65,62 +63,68 @@
             a {
                 gap: 10px;
                 width: 100%;
-                padding: 7px 10px;
+                padding: 7px 0px;
                 position: relative;
                 color: var(--fg-02);
                 text-decoration: none;
                 white-space: nowrap;
-
+                
                 &::before {
                     position: absolute;
                     content: '';
-                    top: -20px;
-                    left: -10px;
-                    width: 10px;
-                    height: 100%;
-                    border-left: 1px solid var(--bg-04);
-                    border-bottom: 2px solid var(--bg-04);
-                    border-bottom-left-radius: var(--rd-box);
+                    top: 50%;
+                    left: -15px;
+                    transform: translateY(-50%);
+                    width: 2px;
+                    height: 20px;
+                    background-color: var(--bg-03);
+                    border-radius: var(--rd-box);
                 }
+
+                &:first-child { margin-top: 10px; }
+                &:last-child { margin-bottom: 10px; }
+            }
+
+            a.active { 
+                color: var(--fg);
+                &::before { background-color: var(--fg); }
             }
         }
     }
-
-    .tree-1, .tree-2 {
-        display: grid;
-        gap: 10px;
+    
+    .tree-1 { 
+        position: relative;
+        padding: 30px 0;
     }
 
-    .tree-1 { padding: 20px; }
-    .tree-2 {
+    .tree-2, .tree-3 {
+        margin-top: 10px;
         position: relative;
+
         &::before {
             position: absolute;
             content: '';
-            top: -20px;
+            top: -33px;
             left: 10px;
-            width: 10px;
-            height: 100%;
+            width: 5px;
+            height: calc(100% + 20px);
             border-left: 1px solid var(--bg-04);
-            border-bottom: 2px solid var(--bg-04);
-            border-bottom-left-radius: var(--rd-box);
+            border-bottom: 1px solid var(--bg-04);
         }
     }
-    .tree-2, .tree-links { padding-left: 20px; }
-}
 
-.primary-menu {
-    margin: 10px;
-    margin-right: 0;
+    .tree-3::before { border-color: var(--bg-03); }
+    .tree-2, .tree-3, .tree-links { padding-left: 25px; }
 }
 
 .secondary-menu {
-    margin: 10px;
-    margin-left: 0;
+    .tree-links a { 
+        padding: 3px 0 !important;
+        &::before { display: none; }
+    }
+    .tree-2::before { display: none !important; }
 }
 
-@media screen and (max-width: 1420px) {
-    .secondary-menu {
-        display: none;
-    }
+@media screen and (max-width: 1400px) {
+    .secondary-menu { display: none; }
 }
