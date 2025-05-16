@@ -10,7 +10,7 @@
     --bg-06: #080a08b8;
 
     --fg: #e0e0e5;
-    --fg-01: #959595;
+    --fg-01: #848484;
     --fg-02: #4f4f4f;
     --fg-03: #575a62;
 
@@ -59,7 +59,7 @@
 /*=== Normal Text ===*/
 p { color: var(--fg-01); line-height: 1.7; }
 strong {  color: var(--fg); font-weight: 500; }
-em { color: var(--fg); font-style: italic; font-weight: 500; }
+em { color: var(--orange-01); font-style: italic; font-weight: 500; }
 
 body {
     overflow: hidden;

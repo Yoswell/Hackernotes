@@ -17,11 +17,6 @@ export function Nav() {
                     <a><Code />Ctrl K / open search</a>
                 </div>
             </nav>
-            <nav className="second-nav">
-                <a className="active">Documentation</a>
-                <a>Exploits</a>
-                <a>Python Tools</a>
-            </nav>
         </header>
     )
 }

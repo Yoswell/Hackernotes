@@ -15,6 +15,7 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 ####
 <div class="tip">
 
+###### Note
 > Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
@@ -50,9 +51,9 @@ The gobuster report us the nex information:
 000001158:   302        3   L    24   W       208 Ch      "logout"
 ```
 ####
-We have a directory with a registration and login panel, so we proceed to register and authenticate. After trying things like [*XSS*, *SSTI*, *SQLI*], the site doesn't respond to any, but if we use the email: admin@goodgames.htb, we see a message: *The user already exists*. 
+We have a directory with a registration and login panel, so we proceed to register and authenticate. After trying things like *(XSS*, *SSTI*, *SQLI)*, the site doesn't respond to any, but if we use the email: admin@goodgames.htb, we see a message: *(The user already exists)*. 
 ####
-This means the **email** field is probably vulnerable to a more sophisticated attack. So we will use **sqlmap** to perform a SLQi [*SQL Injection*] attack; the first step is to determine if it is really vulnerable.
+This means the **email** field is probably vulnerable to a more sophisticated attack. So we will use **sqlmap** to perform a SLQi *(SQL Injection)* attack; the first step is to determine if it is really vulnerable.
 ####
 ### SQLI
 To perform an injection, we need the **cookies** given when we log in, as well as other necessary fields. For this, we need to intercept the login request with **Burpsuite** to generate an **item** in *XML* format to pass to sqlmap: `sqlmap -r intercepted_request`. Once sqlmap finishes evaluating the request, it shows us this on the screen:
@@ -82,34 +83,34 @@ Payload: email=-7226'
     - `--dbs` Database discovery
     - `--dump` Dumps tables or columns as specified
 ####
-### SQLI discovery databases:
-Now that we know it can be exploited with injections: [*Time Based*, *Union Query*], we can use the **dbs** parameter to dump the database contents.
+### SQLI discovery databases
+Now that we know it can be exploited with injections: *(Time Based*, *Union Query)*, we can use the **dbs** parameter to dump the database contents.
 ####
 ```perl
 sqlmap -r intercepted_request --dbs
 ```
 ####
-### SQLI dump tables:
+### SQLI dump tables
 With the previous command, **sqlmap** reports 2 databases on the machine; now we need to dump the tables in those databases.
 ####
 ```perl
 sqlmap -r intercepted_request --tables --dump
 ```
 ####
-### SQLI dump columns:
+### SQLI dump columns
 With the previous command, sqlmap reports 82 tables on the machine; now we need to dump the columns in the **admin_users** table, which is probably where valid users are.
 ####
 ```perl
 sqlmap -r req --T user --columns --dump
 ```
 ####
-#### Crack passwords:
+### Crack passwords
 In this case, sqlmap conveniently dumped the contents of the **user** table columns for us, but if we hadn't used the **-C** parameter to specify the columns to dump. The passwords seem to be in *MD5* format, so we need to crack them. First, let's use an online tool called **Crackstation**: https://crackstation.net/. The password for the `admin` user is `superadministrator`.
 ####
 ####
 ####
 ## First exploitation phase
-### Subdomain:
+### Subdomain
 When we log in as **admin**, at the top there's a nav with a **settings** icon; clicking it takes us to a new subdomain: http://internal-administration.goodgames.htb/. If we add it to `/etc/hosts` and access it, it takes us a *Flask Volt* login panel.
 
 ####
@@ -117,7 +118,7 @@ It appears to be an administration dashboard; we don't know the credentials, but
 ####
 If we start browsing, we see nothing; there are sections and buttons without actions. But there is a section to configure the personal information of the **admin** user. This form is functional, so if we fill in the information, some section should update.
 ####
-If we see our input reflected in the form, it could be a clear indication that this section is vulnerable to SSTI [*Server Side Template Injection*], and since Python with **Flask** is running in the background, it could be vulnerable to **Jinja**, for example. Let's test by entering `{{7*7}}` in the `full_name` field.
+If we see our input reflected in the form, it could be a clear indication that this section is vulnerable to SSTI *(Server Side Template Injection)*, and since Python with **Flask** is running in the background, it could be vulnerable to **Jinja**, for example. Let's test by entering `{{7*7}}` in the `full_name` field.
 ####
 Indeed, the result of the operation is reflected in the **Profile Card**. We need to look for payloads that use double curly braces `{{` to try to generate a reverse shell and gain access to the victim machine.
 ####
@@ -195,5 +196,6 @@ We're changing the **Owner** of the binary to root, not of the container, but of
 ####
 <div class="info">
 
-> The **-p** parameter disables protections, causing it to run with maximum privileges thanks to the **SUID** permission.
+###### Info
+> The `-p` parameter disables protections, causing it to run with maximum privileges thanks to the **SUID** permission.
 </div>

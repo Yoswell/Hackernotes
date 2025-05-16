@@ -35,7 +35,11 @@ header {
             max-width: 280px;
         }
 
-        .search-cont { max-width: 600px; }
+        .search-cont { 
+            max-width: 600px;
+            background-color: var(--bg-06);
+            border-color: var(--bg-03);
+        }
 
         .cont-links {
             display: flex;
@@ -46,18 +50,6 @@ header {
             min-width: 280px;
             max-width: 280px;
         }
-    }
-
-    .second-nav {
-        gap: 20px;
-        height: auto;
-        justify-content: flex-start;
-        border: none;
-        height: 45px;
-
-        a { height: 100%; }
-
-        a.active { color: var(--fg); }
     }
     
     a {

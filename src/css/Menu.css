@@ -91,11 +91,6 @@
             }
         }
     }
-    
-    .tree-1 { 
-        position: relative;
-        padding: 30px 0;
-    }
 
     .tree-2, .tree-3 {
         margin-top: 10px;
@@ -117,11 +112,20 @@
     .tree-2, .tree-3, .tree-links { padding-left: 25px; }
 }
 
+.primary-menu { 
+    border-right: 1px solid var(--bg-02);
+
+    .tree-1 { padding: 20px 10px 20px 0; }
+}
+
 .secondary-menu {
+     .tree-1 { padding: 20px 0 20px 10px; }
+
     .tree-links a { 
         padding: 3px 0 !important;
         &::before { display: none; }
     }
+    
     .tree-2::before { display: none !important; }
 }
 

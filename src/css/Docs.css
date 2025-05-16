@@ -4,8 +4,10 @@
     position: relative;
     overflow: hidden;
     overflow-y: scroll;
-    height: calc(100dvh - 100px);
+    height: calc(100dvh - 60px);
     padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
 
     &::before, &::after {
         position: absolute;
@@ -239,6 +241,8 @@ ul {
 
         .line {
             .line-number {
+                width: 100px;
+                text-align: right;
                 color: var(--fg-01);
                 margin-right: 30px;
                 background-color: var(--bg-02);
@@ -285,15 +289,29 @@ p, li, span {
 
 /*=== Quotes dialog ===*/
 .info, .warning, .tip {
+    width: 100%;
     position: relative;
+    border: 1px solid var(--bg-03);
+    padding: 10px 25px;
+    border-radius: calc(var(--rd-box) - 8px);
+    background-color: var(--bg-06);
+
+    h6 {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        font-weight: 500;
+        font-size: 11px;
+        border-radius: calc(var(--rd-box) - 10px);
+        padding: 1px 5px;
+    }
     
     p { 
-        color: var(--fg-01);
-        padding-left: 35px;
-        font-style: italic;
-        max-width: 60ch;
-        font-size: 15px;
+        color: var(--fg-02);
+        font-size: 14px;
+        font-weight: 500;
         line-height: 1.6;
+        font-style: italic;
         
         strong, em {
             font-size: inherit;
@@ -307,27 +325,44 @@ p, li, span {
     &::before {
         position: absolute;
         content: '';
-        top: -1px;
-        left: 0;
-        width: 25px;
-        height: 25px;
-        background-size: 100%;
+    }
+
+    &::before {
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        width: 2px;
+        height: calc(100% - 20px);
+        border-radius: var(--rd-box);
     }
 }
 
 .tip {
-    p { color: var(--gray-01); }
-    &::before { background-image: url('/Tip.svg'); }
+    h6 { 
+        color: var(--fg);
+        background-color: var(--bg-03);
+        border: 1px solid var(--bg-04);
+        backdrop-filter: blur(3px);
+    } &::before { background-color: #747870; }
 }
 
 .info { 
-    p { color: var(--blue-01); }
-    &::before { background-image: url('/Info.svg'); }
+    h6 { 
+        color: #88a8ff;
+        background-color: #88a4ff21;
+        border: 1px solid #8898ff21;
+        backdrop-filter: blur(3px);
+    } &::before { background-color: #5174ff; }
 }
 
-.warning { 
-    p { color: var(--orange-01); }
-    &::before { background-image: url('/Warning.svg'); }
+.warning {
+    h6 { 
+        color: #ffba88;
+        background-color: #ffb28821;
+        border: 1px solid #ffb28821;
+        backdrop-filter: blur(3px);
+    }
+    &::before { background-color: #ff7e43; }
 }
 
 /*=== Table ===*/

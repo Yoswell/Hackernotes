@@ -18,6 +18,7 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 ####
 <div class="tip">
 
+###### Note
 > Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
@@ -79,6 +80,7 @@ X-Backend[office.paper]
 ####
 <div class="warning">
 
+###### Warning
 > This information is only reported using the HTTP, **HTTPS** not work.
 </div>
 
@@ -89,6 +91,7 @@ Exist one article that explain a vulnerability in wordpress 5.2.3, the article i
 ####
 <div class="info">
 
+###### Info
 > The **static=1** part typically acts as a flag or switch in the code to enable or select the use of a static buffer or a particular processing mode that uses a fixed-size buffer. The value 1 usually means true or enabled.
 </p>
 </div>
