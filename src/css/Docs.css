@@ -9,21 +9,17 @@
     max-width: 800px;
     margin: 0 auto;
 
-    &::before, &::after {
+     &::before {
         position: absolute;
         content: '';
-        top: -50px;
-    }
-
-    &::after {
         top: -100px;
         left: 0;
         width: 100%;
         height: 500px;
-        opacity: 0.8;
         background-image: url('/Lines.svg');
-        background-size: 100px;
-        mask-image: radial-gradient(var(--bg-01), transparent 80%);
+        background-size: 90px;
+        opacity: 0.8;
+        mask-image: radial-gradient(var(--bg-01), transparent 90%);
     }
 
     .banner {
@@ -32,22 +28,27 @@
 
         h1 {
             display: grid;
-            font-size: clamp(25px, 5vw, 40px);
+            font-size: clamp(25px, 5vw, 35px);
             letter-spacing: 0;
             line-height: 1.3;
-            font-weight: 900;
+            font-weight: 600;
+            font-family: var(--font-01);
             
-            span { font-weight: 600; font-size: 25px; }
+            span {
+                font-weight: 400; 
+                font-size: 20px;
+            }
         }
         
         .ads {
             display: flex;
             align-items: center;
             color: var(--fg);
-            gap: 10px;
+            margin-bottom: 30px;
+            gap: 8px;
 
-            span {
-                font-size: 30px;
+            svg {
+                width: 25px;
                 color: #ffd6b4;
             }
         }
@@ -185,12 +186,10 @@ ul {
     border-radius: var(--rd-box);
     background-color: var(--bg-06);
     border: 1px solid var(--bg-03);
-    background-image: url('/Lines.svg');
-    background-size: 40px;
 
     .top-line {
         width: 100%;
-        height: 40px;
+        height: 35px;
         display: flex;
         align-items: center;
         position: relative;
@@ -206,23 +205,21 @@ ul {
             font-weight: 500;
             color: var(--fg);
 
-            &:first-child {
-                border-bottom: 1px solid var(--orange-01);
-            }
+            &:first-child { border-bottom: 1px solid var(--orange-01); }
         }
 
         button {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 6px;
+            right: 6px;
             width: auto;
             padding: 3px 5px;
-            border: 1px solid var(--bg-04);
+            border: 1px solid var(--bg-03);
             background-color: var(--bg-02);
-            border-radius: calc(var(--rd-box) - 4px);
+            border-radius: calc(var(--rd-box) - 4px) calc(var(--rd-box) - 4px) 0 calc(var(--rd-box) - 4px);
             color: var(--fg-01);
             font-weight: 500;
-            font-size: 12px;
+            font-size: 11px;
         }
     }
 
@@ -241,11 +238,10 @@ ul {
 
         .line {
             .line-number {
-                width: 100px;
+                display: inline-block;
                 text-align: right;
                 color: var(--fg-01);
                 margin-right: 30px;
-                background-color: var(--bg-02);
             }
         }
 
@@ -291,19 +287,19 @@ p, li, span {
 .info, .warning, .tip {
     width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 10px 10px 10px 30px;
     border: 1px solid var(--bg-03);
-    padding: 10px 25px;
-    border-radius: calc(var(--rd-box) - 8px);
+    border-radius: calc(var(--rd-box) - 6px);
     background-color: var(--bg-06);
 
     h6 {
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
-        font-weight: 500;
-        font-size: 11px;
+        font-weight: 600;
+        font-size: 14px;
         border-radius: calc(var(--rd-box) - 10px);
-        padding: 1px 5px;
     }
     
     p { 
@@ -329,39 +325,26 @@ p, li, span {
 
     &::before {
         top: 50%;
-        left: 10px;
+        left: 12px;
         transform: translateY(-50%);
         width: 2px;
-        height: calc(100% - 20px);
+        height: calc(100% - 25px);
         border-radius: var(--rd-box);
     }
 }
 
 .tip {
-    h6 { 
-        color: var(--fg);
-        background-color: var(--bg-03);
-        border: 1px solid var(--bg-04);
-        backdrop-filter: blur(3px);
-    } &::before { background-color: #747870; }
+    h6 { color: var(--fg); } 
+    &::before { background-color: #747870; }
 }
 
 .info { 
-    h6 { 
-        color: #88a8ff;
-        background-color: #88a4ff21;
-        border: 1px solid #8898ff21;
-        backdrop-filter: blur(3px);
-    } &::before { background-color: #5174ff; }
+    h6 { color: #88a8ff; } 
+    &::before { background-color: #5174ff; }
 }
 
 .warning {
-    h6 { 
-        color: #ffba88;
-        background-color: #ffb28821;
-        border: 1px solid #ffb28821;
-        backdrop-filter: blur(3px);
-    }
+    h6 { color: #ffba88; }
     &::before { background-color: #ff7e43; }
 }
 
@@ -428,19 +411,6 @@ table {
                 font-weight: 500;
             }
         }
-    }
-}
-
-@keyframes increase {
-    0% {
-        width: 0;
-        height: 0;
-        opacity: 1;
-    }
-    100% {
-        width: 18px;
-        height: 18px;
-        opacity: 0;
     }
 }
 

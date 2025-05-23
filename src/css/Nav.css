@@ -30,9 +30,10 @@ header {
             color: var(--orange-01);
             text-transform: uppercase;
             font-weight: 900;
-            font-size: 22px;
+            font-size: 24px;
             min-width: 280px;
             max-width: 280px;
+            font-family: var(--font-01);
         }
 
         .search-cont { 
@@ -152,40 +153,37 @@ header {
             overflow-y: scroll;
             border: 1px solid var(--bg-03);
             background-color: var(--bg-01);
-            border-radius: calc(var(--rd-box));
+            border-radius: calc(var(--rd-box) - 8px);
 
             article {
                 display: grid;
                 gap: 10px;
-                background-color: var(--bg-06);
                 padding: 15px;
                 position: relative;
                 border-radius: inherit;
+                background-color: var(--bg-06);
                 border: 1px solid var(--bg-02);
 
-                h1 {
-                    font-weight: 600;
-                    color: var(--fg);
-                }
+                h1 { font-weight: 600; color: var(--fg); }
 
                 .float-tags {
                     display: flex;
                     position: absolute;
                     gap: 5px;
-                    top: 10px;
-                    right: 10px;
+                    top: 5px;
+                    right: 5px;
 
                     span {
-                        padding: 2px 6px;
-                        font-weight: 600;
-                        font-size: 12px;
-                        border-radius: calc(var(--rd-box) - 8px);
+                        padding: 1px 5px;
+                        font-weight: 500;
+                        font-size: 11px;
+                        border-radius: calc(var(--rd-box) - 10px);
                     }
 
                     .type, .difficulty {
-                        color: var(--fg-01);
+                        color: var(--fg);
+                        background-color: var(--bg-03);
                         border: 1px solid var(--bg-04);
-                        background-color: var(--bg-02);
                     }
                 }
 

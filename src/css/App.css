@@ -27,21 +27,14 @@
     --gray-03: #0c0b0f;
 
     --code: "Geist Mono";
-    --font-01: "Ledsim";
-    --font-02: "Pacifico";
+    --font-01: "Game";
 
     --rd-box: 15px;
 }
 
 @font-face {
-    font-family: 'Ledsim';
-    src: url('/fonts/Ledsim.ttf') format(TrueType);
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Pacifico';
-    src: url('/fonts/Pacifico.ttf') format(TrueType);
+    font-family: 'Game';
+    src: url('/fonts/Game.ttf') format(TrueType);
     font-style: normal;
 }
 
@@ -72,22 +65,48 @@ body {
     display: grid;
     grid-template-columns: 1fr 100fr 1fr;
     height: 100dvh;
-}
 
-.draw-line {
-    background-image: url('/Lines.svg');
-    background-size: 50px;
-    border-left: 1px solid var(--bg-03);
-    border-right: 1px solid var(--bg-03);
-}
-
-.draw-line {
-    min-width: 12px;
-    max-width: 12px;
-    height: 100%;
-    z-index: 10;
+    &::before {
+        position: absolute;
+        content: '';
+        bottom: 0;
+        left: 0;
+        width: 500px;
+        height: 500px;
+        z-index: -1;
+        background-image: url('/Lines.svg');
+        background-size: 90px;
+        opacity: 0.6;
+        mask-image: linear-gradient(50deg, var(--bg-01), transparent 60%);
+    }
 }
 
 @media screen and (max-width: 1500px) {
     .docs-container { padding: 0 40px; }
+}
+
+.cursor {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    width: 25px;
+    height: 25px;
+    border: 2px solid var(--bg-04);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(0px, 0px);
+    transition: background-color 0.2s ease;
+    z-index: 1000;
+    overflow: hidden;
+    
+    &::before {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-06);
+        opacity: 0.8;
+    }
 }

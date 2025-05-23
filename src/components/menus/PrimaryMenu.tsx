@@ -1,15 +1,15 @@
 import "@/css/Menu.css"
-import { Arrow, Folder, Volt } from "@/components/icons/Icons"
+import { Arrow, Folder, Moon, Sun, Volt } from "@/components/icons/Icons"
 import { Link } from "react-router-dom"
 import { Machines, Errors } from "@/components/constants/Machines"
 import { MenuItemSelected } from "@/App"
 import { useContext } from "react"
 
 type DifficultySectionProps = {
-    difficulty: string;
-    items: { name: string; difficulty: string }[];
-    selectedItem: string;
-    selectItem: (id: string) => void;
+    difficulty: string
+    items: { name: string; difficulty: string }[]
+    selectedItem: string
+    selectItem: (id: string) => void
 };
 
 function DifficultySection({ difficulty, items, selectedItem, selectItem }: DifficultySectionProps) {
@@ -40,6 +40,15 @@ export function PrimaryMenu() {
 
     return (
         <aside className="primary-menu">
+            <section className="settings-menu">
+                <h1>
+                    Dashboard
+                    <span className="change-theme">
+                        <Moon />
+                        <Sun />
+                    </span>
+                </h1>
+            </section>
             <section className="tree tree-1">
                 <h3>
                     <Folder />
@@ -56,12 +65,6 @@ export function PrimaryMenu() {
                         <article className="tree tree-3">
                             <DifficultySection
                                 difficulty="Easy"
-                                items={category.items}
-                                selectedItem={selectedItem}
-                                selectItem={selectItem}>
-                            </DifficultySection>
-                            <DifficultySection
-                                difficulty="Medium"
                                 items={category.items}
                                 selectedItem={selectedItem}
                                 selectItem={selectItem}>

@@ -16,11 +16,9 @@ export const DocsContent : FC<{children: ReactNode}> = ({children}) => {
     return (
         <main className="main-container">
             <PrimaryMenu />
-
             <div className="md-container">
                 {children}
             </div>
-            
             <SecondaryMenu />
         </main>
     )

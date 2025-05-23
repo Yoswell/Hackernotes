@@ -1,11 +1,11 @@
 <div class="banner">
     <div class="ads">
-        <span></span>
-        Get Free - Docs template
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75c1.148 0 2.278.08 3.383.237 1.037.146 1.866.966 1.866 2.013 0 3.728-2.35 6.75-5.25 6.75S6.75 18.728 6.75 15c0-1.046.83-1.867 1.866-2.013A24.204 24.204 0 0 1 12 12.75Zm0 0c2.883 0 5.647.508 8.207 1.44a23.91 23.91 0 0 1-1.152 6.06M12 12.75c-2.883 0-5.647.508-8.208 1.44.125 2.104.52 4.136 1.153 6.06M12 12.75a2.25 2.25 0 0 0 2.248-2.354M12 12.75a2.25 2.25 0 0 1-2.248-2.354M12 8.25c.995 0 1.971-.08 2.922-.236.403-.066.74-.358.795-.762a3.778 3.778 0 0 0-.399-2.25M12 8.25c-.995 0-1.97-.08-2.922-.236-.402-.066-.74-.358-.795-.762a3.734 3.734 0 0 1 .4-2.253M12 8.25a2.25 2.25 0 0 0-2.248 2.146M12 8.25a2.25 2.25 0 0 1 2.248 2.146M8.683 5a6.032 6.032 0 0 1-1.155-1.002c.07-.63.27-1.222.574-1.747m.581 2.749A3.75 3.75 0 0 1 15.318 5m0 0c.427-.283.815-.62 1.155-.999a4.471 4.471 0 0 0-.575-1.752M4.921 6a24.048 24.048 0 0 0-.392 3.314c1.668.546 3.416.914 5.223 1.082M19.08 6c.205 1.08.337 2.187.392 3.314a23.882 23.882 0 0 1-5.223 1.082" /></svg>
+        Offensive Security
     </div>
     <h1>
-        <span>¿By Vishok - Hacking Pentesting?</span>
-        Bizness HTB
+        <span>Vishok - Hacking Pentesting</span>
+        Bizness HTB Writeup
     </h1>
 </div>
 
@@ -18,6 +18,7 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 ####
 <div class="tip">
 
+###### Nmap Scan
 > Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
@@ -31,24 +32,23 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 ####
 ####
 ## Services that are running in the target machine
-### HTTPS:
+### HTTPS
 The machine redirects to the *HTTPS* service, but the web page is blank, with no login or registration sections, so we will perform enumeration to find more things. Although the service has a self-signed certificate, enumeration tools like **gobuster** do not allow enumeration without specific parameters.
 ####
 ```ruby
 gobuster dir -u 'https://bizness.htb/' -w /usr/share/wordlists/dictionary/web-content/directory-list-lowercase-2.3-medium.txt -t 150 -b 404,302 -k
 ```
 ####
-| Gobuster Param | Description |
-| ----- | ----- |
-| dir | Directory discovery after the `/` |
-| -u  | Specifies the host URL |
-| -w  | Specifies the path to a directory wordlist to test |
-| -t  | Number of tasks sent in parallel |
-| -b  | Hides output for the specified status codes |
-| -k  | Bypasses SSL certificate errors |
+- ##### Gobuster Param
+    - `dir` Directory discovery after the `/`
+    - `-u` Specifies the host URL
+    - `-w` Specifies the path to a directory wordlist to test
+    - `-t` Number of tasks sent in parallel
+    - `-b` Hides output for the specified status codes
+    - `-k` Bypasses SSL certificate errors
 
 ####
-Gobuster reports the following: `/control (Status: 200) [Size: 34633]`
+Gobuster reports the following: `/control (Status: 200) [Size: 34633]`.
 ####
 At first, we see an error message because it is a root directory, which itself does not show information, but inside it, there is more information. So, we could do enumeration, but this time within the `/control` directory or search online if **apache.ofbiz** has admin routes.
 ####
@@ -73,10 +73,9 @@ But this vulnerability is not designed to show the output of commands in the con
 sudo tcpdump -i tun0 icmp
 ```
 ####
-| Tcpdump Param | Description |
-| ----- | ----- |
-| -i | Specifies the interface to intercept traffic |
-| -icmp | Captures only ICMP traffic via **ping** |
+- #### Tcpdump Param
+- `-i` Specifies the interface to intercept traffic
+- `-icmp` Captures only ICMP traffic via **ping** |
 ####
 If we run the exploit as follows, we will see a connection in tcpdump:
 ####
@@ -92,7 +91,7 @@ Response ->
 ####
 ####
 ## First exploitation phase
-### NC:
+### Netcat
 The machine has a very important aspect to consider: **One-liners** with **bash** or **sh** do not work, so we have to try something different. We will use the following command:
 ####
 ```bash
@@ -112,7 +111,7 @@ This access is not adequate because it does not give us a fully interactive shel
 ####
 ####
 ## Second exploit phase (Privilage Escalation)
-### Ofbiz:
+### Apache Ofbiz
 We are not in the **sudoers** group, there are no *SUID* permissions, nor capabilities. However, inside `/opt` there is the `ofbiz` directory, which is the root where the Apache **ofbiz** service is running. Inside, there is a directory tree: `/opt/ofbiz/framework/resources/templates`. It seems to have **.xml** files with information about the admin user. There is a very interesting one called: **AdminUserLoginData.xml**. It seems to have relevant information about administrator authentication, so we could read the file and see what it contains.
 ####
 ```xml
@@ -127,6 +126,7 @@ We see what could be the hash of a password encoded with *SHA*, but this hash is
 ####
 <div class="info">
 
+###### Derby DB Information
 > To use Derby, you can download it from the official Apache Derby page and configure the CLASSPATH to include the necessary jar files, such as **derby.jar** and **derbytools.jar**. Once configured, you can use the `ij` utility to create and manage databases by running SQL commands.
 </div>
 
@@ -137,9 +137,8 @@ There are many files, so filtering will help us find information faster. We know
 strings -f ./seg0/* | grep currentPassword
 ```
 ####
-| Strings Param | Description |
-| ----- | ----- |
-| -f | Shows the filename as output |
+- ##### Strings Param
+- `-f` Shows the filename as output
 ####
 ```xml
 ./c1590.dat: 1Order sub-total X since beginning of current year
@@ -165,7 +164,7 @@ strings -f ./seg0/* | grep currentPassword
 ####
 ####
 ####
-### SHA:
+### SHA
 This new password is still not valid, so we need to look for how it is encrypted. Searching, we find the following: `/opt/ofbiz/framework/base/src/main/java/org/apache/ofbiz/base/crypto`, this directory seems to contain all the code used to encrypt the password. First, we find this:
 ####
 ```java
@@ -237,9 +236,8 @@ The final step is to use hashcat to try to crack the hash:
 hashcat -a 0 -m 120 hash /usr/share/wordlists/dictionary/rockyou.txt
 ```
 ####
-| Hashcat Param | Description |
-| ----- | ----- |
-| -a | Specifies brute force attacks *Brute Force* |
-| -m | Specifies the mode to use to crack the hash |
+- ##### Hashcat Param
+- `-a` Specifies brute force attacks
+- `-m` Specifies the mode to use to crack the hash
 ####
 The password for the **root** user is: `monkeybizness`.

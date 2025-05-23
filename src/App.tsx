@@ -6,6 +6,7 @@ import { MarkdownViewer } from '@/components/MarkdowmViewer'
 import { Machines } from '@/components/constants/Machines'
 import { createContext, useEffect, useState } from 'react'
 import { SearchMachine } from './components/SearchMachine'
+import CursorFollower from './components/icons/CursorFollower'
 
 export const MenuItemSelected = createContext<{ selectedItem: string; setSelectedItem: React.Dispatch<React.SetStateAction<string>> }>({
     selectedItem: '',
@@ -41,6 +42,7 @@ function App() {
                     ))}
                 </Routes>
                 <SearchMachine />
+                <CursorFollower />
             </div>
         </BrowserRouter>
         </MenuItemSelected>
