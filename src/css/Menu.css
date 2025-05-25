@@ -59,8 +59,9 @@
 
         .tree-links {
             display: grid;
-            gap: 10px;
             position: relative;
+            padding: 10px 0 10px 25px;
+            gap: 10px;
 
             a {
                 gap: 10px;
@@ -70,7 +71,6 @@
                 text-decoration: none;
                 white-space: nowrap;
 
-                &:first-child { margin-top: 10px; }
             }
 
             a.active { 
@@ -82,22 +82,23 @@
 
 
     .tree-2, .tree-3 {
-        margin-top: 10px;
-        position: relative;
+        padding: 5px 0 5px 25px;
+    }
 
+    .tree-links {
         &::before {
             position: absolute;
             content: '';
-            top: -25px;
+            top: 50%;
             left: 12px;
+            transform: translateY(-50%);
             width: 1px;
-            height: calc(100% + 20px);
-            border-left: 1px solid var(--bg-04);
+            height: calc(100% - 20px);
+            background-color: var(--bg-03);
         }
     }
 
     .tree-3::before { border-color: var(--bg-03); }
-    .tree-2, .tree-3, .tree-links { padding-left: 25px; }
 }
 
 h6 {

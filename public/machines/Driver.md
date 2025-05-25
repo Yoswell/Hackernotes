@@ -1,15 +1,14 @@
 <div class="banner">
     <div class="ads">
-        <span></span>
-        Get Free - Docs template
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75c1.148 0 2.278.08 3.383.237 1.037.146 1.866.966 1.866 2.013 0 3.728-2.35 6.75-5.25 6.75S6.75 18.728 6.75 15c0-1.046.83-1.867 1.866-2.013A24.204 24.204 0 0 1 12 12.75Zm0 0c2.883 0 5.647.508 8.207 1.44a23.91 23.91 0 0 1-1.152 6.06M12 12.75c-2.883 0-5.647.508-8.208 1.44.125 2.104.52 4.136 1.153 6.06M12 12.75a2.25 2.25 0 0 0 2.248-2.354M12 12.75a2.25 2.25 0 0 1-2.248-2.354M12 8.25c.995 0 1.971-.08 2.922-.236.403-.066.74-.358.795-.762a3.778 3.778 0 0 0-.399-2.25M12 8.25c-.995 0-1.97-.08-2.922-.236-.402-.066-.74-.358-.795-.762a3.734 3.734 0 0 1 .4-2.253M12 8.25a2.25 2.25 0 0 0-2.248 2.146M12 8.25a2.25 2.25 0 0 1 2.248 2.146M8.683 5a6.032 6.032 0 0 1-1.155-1.002c.07-.63.27-1.222.574-1.747m.581 2.749A3.75 3.75 0 0 1 15.318 5m0 0c.427-.283.815-.62 1.155-.999a4.471 4.471 0 0 0-.575-1.752M4.921 6a24.048 24.048 0 0 0-.392 3.314c1.668.546 3.416.914 5.223 1.082M19.08 6c.205 1.08.337 2.187.392 3.314a23.882 23.882 0 0 1-5.223 1.082" /></svg>
+        Offensive Security
     </div>
     <h1>
-        <span>¿By Vishok - Hacking Pentesting?</span>
-        Driver HTB
+        <span>Vishok - Hacking Pentesting</span>
+        Driver HTB Writeup
     </h1>
 </div>
 
-####
 ####
 ####
 ## Open ports in the target machine
@@ -18,6 +17,7 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 ####
 <div class="tip">
 
+###### Nmap scan
 > Is time to perfom a scan using **nmap** to discover a treasure. 
 </div>
 
@@ -40,13 +40,13 @@ echo '
 ' | grep -oE '^([0-9])+' | sed -z 's/\n/,/g'
 ```
 ####
-| Grep and sed param | Description |
-| ----- | ----- |
-| -o | Make unique matches |
-| -E | Find other results into a unique string |
-| -z | Separate lines for each null character, is used to sustitute |
-| s/ | Especify the start of the sustitution |
-| /g | Especify the end of the sustitution |
+- ##### Grep and sed param
+    - `dir` Directory discovery after the `/`
+    - `-u` Specifies the host URL
+    - `-w` Specifies the path to a directory wordlist to test
+    - `-t` Number of tasks sent in parallel
+    - `-b` Hides output for the specified status codes
+    - `-k` Bypasses SSL certificate errors
 ####
 Result of nmap scan:
 ####
@@ -104,6 +104,7 @@ Well, we can see that the printer posses a upload finware update file section. T
 ####
 <div class="info">
 
+###### Samba
 > The **SCF** file may contain a reference to a remote **SMB** resource (e.g., a share on your attacking machine). When the printer or system processing the SCF attempts to access that SMB resource, it may send NTLM credentials or attempt to authenticate, which can be exploited to capture hashes or perform relay attacks. 
 </div>
 
@@ -128,15 +129,14 @@ sudo responder -I tun0 -dwv
 sudo impacket-smbserver test $(pwd) -smb2support
 ```
 ####
-| Responder and Impacket param | Description |
-| ----- | ----- |
-| -I | Sspecify the interface to start listen |
-| -d | Enable answers for DHCP broadcast requests |
-| -w | Start the WPAD rogue proxy server |
-| -v | Verbose mode |
-| test | Name of the shared resource |
-| $(pwd) | `pwd` command return the current path, and this syncronize the shared resource with the current path |
-| -smb2support | Give support at the version **2** of the *SMB* |
+- ##### Responder and Impacket param
+    - `-I` Specify the interface to start listening  
+    - `-d` Enable answers for DHCP broadcast requests  
+    - `-w` Start the WPAD rogue proxy server  
+    - `-v` Verbose mode  
+    - `test` Name of the shared resource  
+    - `$(pwd)` `pwd` command returns the current path, synchronizing the shared resource with it  
+    - `-smb2support` Adds support for **SMBv2**
 ####
 In both cases we will are able to intercept the *NTLM* hashes:
 ####
@@ -174,6 +174,7 @@ Session completed.
 ####
 <div class="warning">
 
+###### Care with the output
 > All hashes are the same, always you get the same password  
 </div>
 
@@ -184,17 +185,23 @@ The *5985* port is open, remeber, this port is a *Windows Remote Management*, so
 evil-winrm -i 10.10.11.106 -u tony -p liltony
 ```
 ####
-| Evil-winrm param | Description |
-| ----- | ----- |
-| -i | Specify the ip target host |
-| -u | Sspecify the user |
-| -p | Sspecify the password |
+- ##### Evil-winrm param
+    - `-i` Specify the target host IP  
+    - `-u` Specify the username  
+    - `-p` Specify the password
 ####
 ####
 ####
 ## Second exploit phase (Privilage Escalation)
 ### RPC
 Exist a vulnerability in Windows: *PrintNightmare*, this vulnerability is a critical security flaw in the Windows *Print Spooler* service that allows attackers to execute arbitrary code with SYSTEM-level privileges (the highest level of access on a Windows system). This vulnerability was publicly disclosed in June 2021 and affected multiple versions of Windows, including Windows 7, 8.1, 10, and Windows Server systems.
+####
+<div class="info">
+
+###### Remote Procedure Call
+> In distributed computing, a **remote procedure call** is when a computer program causes a procedure to execute in a different address space, which is **written** as if it were a normal procedure call, without the programmer explicitly writing the details for the remote interaction.
+</div>
+
 ####
 The way to discover if a target machine is vulnerable at this is dump a RPC interfaces to found one or both: [*MS-RPRN*, *MS-PAR*], for do that, we need to use a **impacket** tool:
 ####

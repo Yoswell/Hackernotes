@@ -1,4 +1,4 @@
-import { TabletDevice, Tag, World } from "@/components/icons/Icons"
+import { Left, Right, Tag, World } from "@/components/icons/Icons"
 import { Machines } from "@/components/constants/Machines"
 import { MenuItemSelected } from "@/App"
 import { useContext } from "react"
@@ -12,8 +12,8 @@ export function SecondaryMenu() {
                 <h1>
                     Control menu
                     <span className="change-theme">
-                        <TabletDevice />
-                        <TabletDevice />
+                        <Left />
+                        <Right />
                     </span>
                 </h1>
             </section>
