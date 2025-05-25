@@ -12,24 +12,18 @@
     --fg: #e0e0e5;
     --fg-01: #848484;
     --fg-02: #4f4f4f;
-    --fg-03: #575a62;
+    --fg-03: #b2b8ab;
 
     --orange-01: #cbbdaf;
-    --orange-02: #3e3b37;
-    --orange-03: #050504;
-
-    --blue-01: #afb4cb;
-    --blue-02: #37383e;
-    --blue-03: #040405;
-
-    --gray-01: #b3afcb;
-    --gray-02: #28262d;
-    --gray-03: #0c0b0f;
 
     --code: "Geist Mono";
     --font-01: "Game";
+    --font-02: "Devil";
 
-    --rd-box: 15px;
+    --rd-10: 10px;
+    --rd-8: 8px;
+    --rd-6: 6px;
+    --rd-4: 4px;
 }
 
 @font-face {
@@ -38,13 +32,19 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Devil';
+    src: url('/fonts/Devil.ttf') format(TrueType);
+    font-style: normal;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-size: 16px;
-    scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     font-family: var(--font-02);
     font-family: "Geist", sans-serif;
 }

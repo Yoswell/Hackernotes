@@ -53,8 +53,7 @@
             padding: 5px;
             background-color: var(--bg-02);
             border: 1px solid var(--bg-04);
-            border-radius: 6px;
-            z-index: 2;
+            border-radius: var(--rd-6);
         }
 
         .tree-links {
@@ -112,7 +111,7 @@ h6 {
     padding: 15px;
     background-color: var(--bg-06);
     border: 1px solid var(--bg-03);
-    border-radius: calc(var(--rd-box) - 8px);
+    border-radius: var(--rd-8);
     
     h1 {
         display: flex;

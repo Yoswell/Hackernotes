@@ -35,8 +35,10 @@
             margin-bottom: 30px;
             gap: 8px;
 
-            svg {
-                width: 25px;
+            span {
+                margin-top: -8px;
+                font-family: var(--font-02);
+                font-size: 45px;
                 color: #ffd6b4;
             }
         }
@@ -183,7 +185,7 @@ ul {
     align-items: flex-start;
     position: relative;
     overflow: hidden;
-    border-radius: var(--rd-box);
+    border-radius: var(--rd-8);
     background-color: var(--bg-06);
     border: 1px solid var(--bg-03);
 
@@ -216,7 +218,7 @@ ul {
             padding: 3px 5px;
             border: 1px solid var(--bg-03);
             background-color: var(--bg-02);
-            border-radius: calc(var(--rd-box) - 4px) calc(var(--rd-box) - 4px) 0 calc(var(--rd-box) - 4px);
+            border-radius: var(--rd-4) var(--rd-4)  0 var(--rd-4) ;
             color: var(--fg-01);
             font-weight: 500;
             font-size: 11px;
@@ -230,14 +232,16 @@ ul {
         font-size: 14px;
         padding: 15px;
         overflow-x: auto;
-        position: relative;
-        overflow: hidden;
         text-overflow: ellipsis;
         color: var(--fg-02);
         font-family: var(--code);
         background-color: transparent;
-
+        display: inline-block;
+        
         .line {
+            width: 100%;
+            position: relative;
+
             .line-number {
                 display: inline-block;
                 text-align: right;
@@ -268,7 +272,6 @@ ul {
 }
 
 p, li, span {
-    --radius: 8px;
     --padding: 1px 5px;
 
     code {
@@ -279,7 +282,7 @@ p, li, span {
         background-color: var(--bg-02);
         border: 1px solid var(--bg-04);
         padding: var(--padding);
-        border-radius: var(--radius);
+        border-radius: var(--rd-8);
         font-weight: 500;
     }
 }
@@ -294,14 +297,13 @@ p, li, span {
     gap: 5px;
     padding: 10px 20px 10px 30px;
     border: 1px solid var(--bg-03);
-    border-radius: calc(var(--rd-box) - 6px);
     background-color: var(--bg-06);
+    border-radius: var(--rd-8);
 
     h6 {
         display: none;
         font-weight: 600;
         font-size: 14px;
-        border-radius: calc(var(--rd-box) - 10px);
     }
     
     p { 
@@ -312,8 +314,6 @@ p, li, span {
             font-size: inherit;
             line-height: inherit;
             font-family: inherit;
-            font-style: inherit;
-            color: var(--fg);
         }
     }
     
@@ -325,7 +325,7 @@ p, li, span {
         transform: translateY(-50%);
         width: 2px;
         height: calc(100% - 25px);
-        border-radius: var(--rd-box);
+        border-radius: var(--rd-10);
     }
 }
 
