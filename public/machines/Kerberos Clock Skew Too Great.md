@@ -11,7 +11,6 @@
 
 ####
 ####
-####
 ## Bypassing Kerberos Time Verification
 ### Clock skew too great:
 **Kerberos** is a network authentication protocol that uses encrypted tickets to verify identities in distributed systems. One of its fundamental security measures is **strict time synchronization** between clients and servers.

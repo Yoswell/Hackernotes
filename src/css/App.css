@@ -2,16 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 
 :root {    
-    --bg-01: #040504;
-    --bg-02: #0c0f0b;
-    --bg-03: #1a1e1a;
-    --bg-04: #282c28;
-    --bg-05: #373e37;
-    --bg-06: #080a08b8;
+    --bg-01: #040405;
+    --bg-02: #0b0c0f;
+    --bg-03: #1a1b1e;
+    --bg-04: #282a2c;
+    --bg-05: #37393e;
+    --bg-06: #08090ab8;
 
     --fg: #e0e0e5;
-    --fg-01: #848484;
-    --fg-02: #4f4f4f;
+    --fg-01: #7c7d81;
+    --fg-02: #4f4f51;
     --fg-03: #b2b8ab;
 
     --orange-01: #cbbdaf;
@@ -25,6 +25,7 @@
     --rd-6: 6px;
     --rd-4: 4px;
 }
+
 
 @font-face {
     font-family: 'Game';
@@ -42,7 +43,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-size: 16px;
+    font-size: 17px;
     scrollbar-width: none;
     -ms-overflow-style: none;
     font-family: var(--font-02);
@@ -50,7 +51,7 @@
 }
 
 /*=== Normal Text ===*/
-p { color: var(--fg-01); line-height: 1.7; }
+p, li { color: var(--fg-01); line-height: 1.5; }
 strong {  color: var(--fg); font-weight: 500; }
 em { color: var(--orange-01); font-style: italic; font-weight: 500; }
 
@@ -66,38 +67,31 @@ body {
     grid-template-columns: 1fr 100fr 1fr;
     height: 100dvh;
 
-    &::before {
+    &::before, &::after {
         position: absolute;
         content: '';
+        z-index: -1;
+        background-image: url('/Lines.svg');
+        background-size: 90px;
+    }
+
+    &::before {
         bottom: 0;
         left: 0;
         width: 500px;
         height: 500px;
-        z-index: -1;
-        background-image: url('/Lines.svg');
-        background-size: 90px;
-        opacity: 0.8;
         mask-image: linear-gradient(50deg, var(--bg-01), transparent 60%);
     }
 
     &::after {
-        position: absolute;
-        content: '';
         top: -250px;
         left: -60px;
         width: 100%;
         height: 600px;
-        background-image: url('/Lines.svg');
-        background-size: 90px;
-        opacity: 0.8;
-        z-index: -1;
         mask-image: radial-gradient(var(--bg-01), transparent);
     }
 }
 
-@media screen and (max-width: 1500px) {
-    .docs-container { padding: 0 40px; }
-}
 
 .cursor {
     position: fixed;
@@ -105,7 +99,7 @@ body {
     left: 5px;
     width: 25px;
     height: 25px;
-    border: 2px solid var(--bg-04);
+    border: 2px solid var(--bg-05);
     border-radius: 50%;
     pointer-events: none;
     transform: translate(0px, 0px);
@@ -123,4 +117,8 @@ body {
         background-color: var(--bg-06);
         opacity: 0.8;
     }
+}
+
+@media screen and (max-width: 1500px) {
+    .docs-container { padding: 0 40px; }
 }

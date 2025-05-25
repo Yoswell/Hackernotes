@@ -19,7 +19,7 @@ export function SecondaryMenu() {
             </section>
             <section className="tree tree-1">
                <h3><Tag />Topics viewed</h3>
-                <article className="tree tree-links">
+                <article className="tree tree-links tree-links-tags">
                     {Machines.map((a) => (
                         <>{a.items.map((item_sm) => (
                             <>{item_sm.tags.map((item_mm, index) => {

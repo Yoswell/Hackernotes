@@ -38,13 +38,13 @@ How are many ports, is a little tedious insert one to one port in a new line to 
 ```ruby
 echo '
     53/tcp    open  domain
-	135/tcp   open  msrpc
-	139/tcp   open  netbios-ssn
-	445/tcp   open  microsoft-ds
-	3268/tcp  open  globalcatLDAP
-	9389/tcp  open  adws
-	49667/tcp open  unknown
-	49691/tcp open  unknown
+    135/tcp   open  msrpc
+    139/tcp   open  netbios-ssn
+    445/tcp   open  microsoft-ds
+    3268/tcp  open  globalcatLDAP
+    9389/tcp  open  adws
+    49667/tcp open  unknown
+    49691/tcp open  unknown
 ' | grep -oE '^([0-9]+)' | sed -z 's/\n/,/g'
 ```
 ####

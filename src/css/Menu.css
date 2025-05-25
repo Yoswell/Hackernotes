@@ -41,6 +41,7 @@
         span {
             display: block;
             max-width: 95%;
+            font-size: 16px;
             position: relative;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -60,29 +61,34 @@
             display: grid;
             position: relative;
             padding: 10px 0 10px 25px;
-            gap: 10px;
 
             a {
-                gap: 10px;
                 width: 100%;
-                position: relative;
-                color: var(--fg-02);
+                padding: 5px 0;
+                font-size: 16px;
+                color: var(--fg-01);
                 text-decoration: none;
                 white-space: nowrap;
-
+                transition: 200ms;
+                outline: 1px solid transparent;
             }
 
             a.active { 
+                font-weight: 500;
                 color: var(--fg);
+                padding: 5px 15px;
+                border-radius: var(--rd-8);
+                outline-color: var(--bg-04);
+                background-color: var(--bg-06);
                 &::before { background-color: var(--fg); }
             }
         }
+
+        .tree-links-tags { a { padding: 3px 0; color: var(--fg-02); } }
     }
 
 
-    .tree-2, .tree-3 {
-        padding: 5px 0 5px 25px;
-    }
+    .tree-2, .tree-3 { padding: 5px 0 5px 25px; }
 
     .tree-links {
         &::before {
@@ -131,10 +137,8 @@ h6 {
             width: 25px;
             height: 25px;
             padding: 5px;
-            background-color: var(--bg-02);
+            border-radius: var(--rd-6);
             border: 1px solid var(--bg-04);
-            border-radius: 6px;
-            z-index: 2;
         }
     }
 }

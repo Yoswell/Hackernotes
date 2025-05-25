@@ -1,15 +1,14 @@
 <div class="banner">
     <div class="ads">
-        <span></span>
-        Get Free - Docs template
+        <span>K</span>
+        Offensive Security
     </div>
     <h1>
-        <span>¿By Vishok - Hacking Pentesting?</span>
-        Usage HTB
+        <span>Vishok - Hacking Pentesting</span>
+        Usage HTB Writeup
     </h1>
 </div>
 
-####
 ####
 ####
 ## Open ports in target machine
